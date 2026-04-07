@@ -85,7 +85,7 @@ const Navbar = () => {
             {/* Bouton Admin */}
             <div className="flex items-center space-x-2">
               <a 
-                href="http://localhost:5174" 
+                href="https://elbalas-admin.vercel.app"  
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden md:block bg-gradient-to-r from-yellow-600 to-yellow-500 text-black px-5 py-2 rounded-full font-semibold hover:from-yellow-500 hover:to-yellow-400 transition-all duration-300 text-sm"

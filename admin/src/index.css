@@ -8,7 +8,3 @@
 button, span, .badge, .notification-count, [class*="rounded-full"] {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
 }
-
-html, body {
-    touch-action: pan-x pan-y; /* Empêche le pincement pour dézoomer en dessous */
-}

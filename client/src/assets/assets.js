@@ -1,5 +1,5 @@
 import elbalas from '../assets/ELBALAS.png'
-import video from '../assets/video.mp4'
+import video from '../assets/Video.mp4'
 import background from '../assets/background.webp'
 import icone from '../assets/icone.png'
 

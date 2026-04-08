@@ -640,9 +640,9 @@ const getPasswordStrengthMessage = (password) => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Paramètres du compte</h1>
+    <div className="w-full px-3 md:px-4 max-w-4xl mx-auto">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Paramètres du compte</h1>
         
         {residenceData && (
           <button
@@ -657,50 +657,50 @@ const getPasswordStrengthMessage = (password) => {
     }
     setShowResidenceModal(true);
   }}
-  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2"
+  className="bg-blue-600 hover:bg-blue-700 text-white px-3 md:px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 text-sm md:text-base"
 >
-  <FaHome className="text-lg" />
-  <span>Résidence {residenceData.residenceName}</span>
+  <FaHome className="text-base md:text-lg" />
+  <span className="truncate max-w-[150px] md:max-w-none">Résidence {residenceData.residenceName}</span>
   <FaEdit className="text-sm" />
 </button>
         )}
       </div>
 
       {globalError && (
-  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm md:text-base">
     {globalError}
   </div>
 )}
 
 {profileSuccess && (
-  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
+  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 text-sm md:text-base">
     {profileSuccess}
   </div>
 )}
 
 {residenceSuccess && (
-  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
+  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 text-sm md:text-base">
     {residenceSuccess}
   </div>
 )}
 
       <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
-        <div className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-6 py-4">
+        <div className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center">
-            <FaUser className="text-xl mr-3" />
-            <h2 className="text-xl font-semibold">Informations personnelles</h2>
+            <FaUser className="text-lg md:text-xl mr-2 md:mr-3" />
+            <h2 className="text-lg md:text-xl font-semibold">Informations personnelles</h2>
           </div>
         </div>
         
-        <div className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="p-4 md:p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
   <label className="block text-sm font-medium text-gray-700 mb-1">
     Nom complet
   </label>
   <div className="relative">
     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-      <FaUser size={18} />
+      <FaUser size={16} className="md:size-18" />
     </div>
     <input
       type="text"
@@ -714,12 +714,12 @@ const getPasswordStrengthMessage = (password) => {
         setOriginalName(userData.name);
         setIsEditingName(true);
       }}
-      className="w-full pl-10 pr-20 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      className="w-full pl-9 md:pl-10 pr-16 md:pr-20 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
     />
     
     
     {isEditingName && (
-      <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-2">
+      <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-1 md:space-x-2">
         <button
           onClick={async () => {
             if (editedName !== originalName && editedName.trim()) {
@@ -730,7 +730,7 @@ const getPasswordStrengthMessage = (password) => {
           className="text-green-600 hover:text-green-800 bg-white rounded-full p-1"
           title="Valider"
         >
-          <FaCheck size={18} />
+          <FaCheck size={14} className="md:size-18" />
         </button>
         <button
           onClick={() => {
@@ -740,7 +740,7 @@ const getPasswordStrengthMessage = (password) => {
           className="text-red-600 hover:text-red-800 bg-white rounded-full p-1"
           title="Annuler"
         >
-          <FaTimes size={18} />
+          <FaTimes size={14} className="md:size-18" />
         </button>
       </div>
     )}
@@ -752,9 +752,9 @@ const getPasswordStrengthMessage = (password) => {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Email
               </label>
-              <div className="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200">
-                <FaEnvelope className="text-gray-400 mr-2" />
-                <span className="text-gray-800">{userData.email}</span>
+              <div className="flex items-center p-2 md:p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <FaEnvelope className="text-gray-400 mr-2 text-sm md:text-base" />
+                <span className="text-gray-800 text-sm md:text-base truncate">{userData.email}</span>
               </div>
               <p className="text-xs text-gray-500 mt-1">Non modifiable</p>
             </div>
@@ -765,7 +765,7 @@ const getPasswordStrengthMessage = (password) => {
   </label>
   <div className="relative">
     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-      <FaPhone size={18} />
+      <FaPhone size={16} className="md:size-18" />
     </div>
     <input
       type="tel"
@@ -773,7 +773,7 @@ const getPasswordStrengthMessage = (password) => {
       onChange={(e) => {
         setEditedPhone(e.target.value);
         setIsEditingPhone(true);
-        setPhoneError(''); // Efface l'erreur quand l'utilisateur tape
+        setPhoneError('');
       }}
       onFocus={() => {
         setEditedPhone(userData.phone || '');
@@ -781,7 +781,7 @@ const getPasswordStrengthMessage = (password) => {
         setIsEditingPhone(true);
         setPhoneError('');
       }}
-      className={`w-full pl-10 pr-20 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+      className={`w-full pl-9 md:pl-10 pr-16 md:pr-20 py-2 text-sm md:text-base border rounded-lg focus:ring-2 focus:ring-blue-500 ${
         phoneError ? 'border-red-500' : 'border-gray-300'
       }`}
       placeholder="12 345 678"
@@ -789,7 +789,7 @@ const getPasswordStrengthMessage = (password) => {
     />
     
     {isEditingPhone && (
-      <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-2">
+      <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-1 md:space-x-2">
         <button
           onClick={async () => {
             if (editedPhone !== originalPhone) {
@@ -800,7 +800,7 @@ const getPasswordStrengthMessage = (password) => {
           className="text-green-600 hover:text-green-800 bg-white rounded-full p-1"
           title="Valider"
         >
-          <FaCheck size={18} />
+          <FaCheck size={14} className="md:size-18" />
         </button>
         <button
           onClick={() => {
@@ -811,13 +811,13 @@ const getPasswordStrengthMessage = (password) => {
           className="text-red-600 hover:text-red-800 bg-white rounded-full p-1"
           title="Annuler"
         >
-          <FaTimes size={18} />
+          <FaTimes size={14} className="md:size-18" />
         </button>
       </div>
     )}
   </div>
   {phoneError && (
-    <p className={`text-red-500 text-sm mt-1 ${shakePhone ? 'animate-shake' : ''}`}>
+    <p className={`text-red-500 text-xs md:text-sm mt-1 ${shakePhone ? 'animate-shake' : ''}`}>
       {phoneError}
     </p>
   )}
@@ -828,9 +828,9 @@ const getPasswordStrengthMessage = (password) => {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Rôle
               </label>
-              <div className="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200">
-                <FaKey className="text-gray-400 mr-2" />
-                <span className="text-gray-800 capitalize">{userData.role}</span>
+              <div className="flex items-center p-2 md:p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <FaKey className="text-gray-400 mr-2 text-sm md:text-base" />
+                <span className="text-gray-800 text-sm md:text-base capitalize">{userData.role}</span>
               </div>
             </div>
           </div>
@@ -838,14 +838,14 @@ const getPasswordStrengthMessage = (password) => {
       </div>
 
       <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
-        <div className="bg-gradient-to-r from-yellow-600 to-yellow-500 text-white px-6 py-4">
+        <div className="bg-gradient-to-r from-yellow-600 to-yellow-500 text-white px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center">
-            <FaLock className="text-xl mr-3" />
-            <h2 className="text-xl font-semibold">Changer le mot de passe</h2>
+            <FaLock className="text-lg md:text-xl mr-2 md:mr-3" />
+            <h2 className="text-lg md:text-xl font-semibold">Changer le mot de passe</h2>
           </div>
         </div>
         
-        <form onSubmit={handlePasswordChange} className="p-6">
+        <form onSubmit={handlePasswordChange} className="p-4 md:p-6">
           <div className="space-y-4">
             <div>
   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -859,7 +859,7 @@ const getPasswordStrengthMessage = (password) => {
         setPasswordData({...passwordData, currentPassword: e.target.value});
         setCurrentPasswordError('');
       }}
-      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 pr-10"
+      className="w-full px-4 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 pr-10"
       required
     />
     <button
@@ -867,11 +867,11 @@ const getPasswordStrengthMessage = (password) => {
       onClick={() => setShowCurrentPassword(!showCurrentPassword)}
       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
     >
-      {showCurrentPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+      {showCurrentPassword ? <FaEyeSlash size={16} className="md:size-18" /> : <FaEye size={16} className="md:size-18" />}
     </button>
   </div>
   {currentPasswordError && (
-    <p className={`text-red-500 text-sm mt-1 ${shakeCurrent ? 'animate-shake' : ''}`}>
+    <p className={`text-red-500 text-xs md:text-sm mt-1 ${shakeCurrent ? 'animate-shake' : ''}`}>
       {currentPasswordError}
     </p>
   )}
@@ -889,7 +889,7 @@ const getPasswordStrengthMessage = (password) => {
         setPasswordData({...passwordData, newPassword: e.target.value});
         setNewPasswordError('');
       }}
-      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 pr-10"
+      className="w-full px-4 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 pr-10"
       required
       minLength="6"
     />
@@ -898,7 +898,7 @@ const getPasswordStrengthMessage = (password) => {
       onClick={() => setShowNewPassword(!showNewPassword)}
       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
     >
-      {showNewPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+      {showNewPassword ? <FaEyeSlash size={16} className="md:size-18" /> : <FaEye size={16} className="md:size-18" />}
     </button>
   </div>
   {passwordData.newPassword && (
@@ -907,7 +907,7 @@ const getPasswordStrengthMessage = (password) => {
     </p>
   )}
   {newPasswordError && (
-    <p className={`text-red-500 text-sm mt-1 ${shakeNew ? 'animate-shake' : ''}`}>
+    <p className={`text-red-500 text-xs md:text-sm mt-1 ${shakeNew ? 'animate-shake' : ''}`}>
       {newPasswordError}
     </p>
   )}
@@ -925,7 +925,7 @@ const getPasswordStrengthMessage = (password) => {
         setPasswordData({...passwordData, confirmPassword: e.target.value});
         setConfirmPasswordError('');
       }}
-      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 pr-10"
+      className="w-full px-4 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 pr-10"
       required
     />
     <button
@@ -933,27 +933,27 @@ const getPasswordStrengthMessage = (password) => {
       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
     >
-      {showConfirmPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+      {showConfirmPassword ? <FaEyeSlash size={16} className="md:size-18" /> : <FaEye size={16} className="md:size-18" />}
     </button>
   </div>
   {confirmPasswordError && (
-    <p className={`text-red-500 text-sm mt-1 ${shakeConfirm ? 'animate-shake' : ''}`}>
+    <p className={`text-red-500 text-xs md:text-sm mt-1 ${shakeConfirm ? 'animate-shake' : ''}`}>
       {confirmPasswordError}
     </p>
   )}
 </div>
 
             {passwordSuccess && (
-  <div className="text-green-600 text-sm mt-2">
+  <div className="text-green-600 text-xs md:text-sm mt-2">
     ✓ {passwordSuccess}
   </div>
 )}
 
             <button
               type="submit"
-              className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors flex items-center"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 md:px-6 py-2 rounded-lg font-semibold transition-colors flex items-center text-sm md:text-base"
             >
-              <FaSave className="mr-2" />
+              <FaSave className="mr-2 text-sm md:text-base" />
               Changer le mot de passe
             </button>
           </div>
@@ -961,29 +961,29 @@ const getPasswordStrengthMessage = (password) => {
       </div>
 
       <div className="bg-white rounded-xl shadow-lg overflow-hidden border-2 border-red-200">
-        <div className="bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-4">
+        <div className="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center">
-            <FaExclamationTriangle className="text-xl mr-3" />
-            <h2 className="text-xl font-semibold">Zone dangereuse</h2>
+            <FaExclamationTriangle className="text-lg md:text-xl mr-2 md:mr-3" />
+            <h2 className="text-lg md:text-xl font-semibold">Zone dangereuse</h2>
           </div>
         </div>
         
-        <div className="p-6">
+        <div className="p-4 md:p-6">
           {!showDeleteConfirm ? (
             <button
               onClick={() => setShowDeleteConfirm(true)}
-              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors flex items-center"
+              className="bg-red-500 hover:bg-red-600 text-white px-4 md:px-6 py-2 rounded-lg font-semibold transition-colors flex items-center text-sm md:text-base"
             >
-              <FaTrash className="mr-2" />
+              <FaTrash className="mr-2 text-sm md:text-base" />
               Supprimer mon compte
             </button>
           ) : (
             <div className="space-y-4">
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <p className="text-red-700 font-medium mb-2">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 md:p-4">
+                <p className="text-red-700 font-medium mb-2 text-sm md:text-base">
                   ⚠️ Cette action est irréversible !
                 </p>
-                <p className="text-sm text-red-600">
+                <p className="text-xs md:text-sm text-red-600">
                   La suppression de votre compte entraînera la perte définitive de toutes vos données.
                 </p>
               </div>
@@ -996,15 +996,15 @@ const getPasswordStrengthMessage = (password) => {
                   type="text"
                   value={deleteConfirmation}
                   onChange={(e) => setDeleteConfirmation(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+                  className="w-full px-4 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
                   placeholder="SUPPRIMER"
                 />
               </div>
 
-              <div className="flex space-x-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={handleDeleteAccount}
-                  className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 md:px-6 py-2 rounded-lg font-semibold transition-colors text-sm md:text-base"
                 >
                   Confirmer la suppression
                 </button>
@@ -1013,7 +1013,7 @@ const getPasswordStrengthMessage = (password) => {
                     setShowDeleteConfirm(false);
                     setDeleteConfirmation('');
                   }}
-                  className="bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-2 rounded-lg font-semibold transition-colors"
+                  className="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 md:px-6 py-2 rounded-lg font-semibold transition-colors text-sm md:text-base"
                 >
                   Annuler
                 </button>
@@ -1024,7 +1024,7 @@ const getPasswordStrengthMessage = (password) => {
       </div>
 
       {showResidenceModal && residenceData && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4">
           <div 
   className="absolute inset-0 bg-black/70 backdrop-blur-sm" 
   onClick={() => {
@@ -1038,19 +1038,19 @@ const getPasswordStrengthMessage = (password) => {
     setIsEditingAppartName(false);
     setEditingAppartInfo({ blocIndex: null, etageIndex: null, appartIndex: null });
     setExpandedBloc(null);
-    setShowAddAppart(false);           // ← AJOUTE CETTE LIGNE
-    setSelectedBlocForAppart(null);    // ← AJOUTE CETTE LIGNE
-    setShowEtageConfig(false);         // ← AJOUTE CETTE LIGNE
-    setSelectedBlocForEtage(null);     // ← AJOUTE CETTE LIGNE
+    setShowAddAppart(false);
+    setSelectedBlocForAppart(null);
+    setShowEtageConfig(false);
+    setSelectedBlocForEtage(null);
     setNewAppartName('');
   }} 
 />
           
           <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-4 rounded-t-2xl flex justify-between items-center">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 md:px-6 py-3 md:py-4 rounded-t-2xl flex justify-between items-center">
               <div className="flex items-center">
-                <FaBuilding className="text-2xl mr-3" />
-                <h2 className="text-2xl font-bold">Gestion de la résidence</h2>
+                <FaBuilding className="text-xl md:text-2xl mr-2 md:mr-3" />
+                <h2 className="text-xl md:text-2xl font-bold">Gestion de la résidence</h2>
               </div>
               <button
   onClick={() => {
@@ -1064,20 +1064,20 @@ const getPasswordStrengthMessage = (password) => {
     setIsEditingAppartName(false);
     setEditingAppartInfo({ blocIndex: null, etageIndex: null, appartIndex: null });
     setExpandedBloc(null);
-    setShowAddAppart(false);           // ← AJOUTE CETTE LIGNE
-    setSelectedBlocForAppart(null);    // ← AJOUTE CETTE LIGNE
-    setShowEtageConfig(false);         // ← AJOUTE CETTE LIGNE
-    setSelectedBlocForEtage(null);     // ← AJOUTE CETTE LIGNE
+    setShowAddAppart(false);
+    setSelectedBlocForAppart(null);
+    setShowEtageConfig(false);
+    setSelectedBlocForEtage(null);
     setNewAppartName(''); 
     
   }}
   className="text-white hover:text-gray-200"
 >
-  <FaTimes size={24} />
+  <FaTimes size={20} className="md:size-24" />
 </button>
             </div>
 
-            <div className="p-6">
+            <div className="p-4 md:p-6">
               {/* Nom de la résidence avec icônes */}
               <div className="mb-6 relative">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -1096,12 +1096,12 @@ const getPasswordStrengthMessage = (password) => {
                       setOriginalResidenceName(residenceData.residenceName);
                       setIsEditingResidenceName(true);
                     }}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 pr-20"
+                    className="w-full px-4 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 pr-16 md:pr-20"
                   />
                   
                   {/* Icônes de validation/annulation */}
                   {isEditingResidenceName && (
-                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-2">
+                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-1 md:space-x-2">
                       {/* Check vert - Valider */}
                       <button
                         onClick={async () => {
@@ -1118,7 +1118,7 @@ const getPasswordStrengthMessage = (password) => {
                         className="text-green-600 hover:text-green-800 bg-white rounded-full p-1"
                         title="Valider"
                       >
-                        <FaCheck size={18} />
+                        <FaCheck size={14} className="md:size-18" />
                       </button>
                       
                       {/* X rouge - Annuler */}
@@ -1130,7 +1130,7 @@ const getPasswordStrengthMessage = (password) => {
                         className="text-red-600 hover:text-red-800 bg-white rounded-full p-1"
                         title="Annuler"
                       >
-                        <FaTimes size={18} />
+                        <FaTimes size={14} className="md:size-18" />
                       </button>
                     </div>
                   )}
@@ -1138,11 +1138,11 @@ const getPasswordStrengthMessage = (password) => {
               </div>
 
               <div className="space-y-4">
-                <div className="flex justify-between items-center">
-  <h3 className="text-lg font-semibold text-gray-800">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+  <h3 className="text-base md:text-lg font-semibold text-gray-800">
     Blocs ({residenceData.blocs.length}/11)
     {residenceData.blocs.length >= 11 && (
-      <span className="text-red-500 text-sm ml-2"> Limite atteinte</span>
+      <span className="text-red-500 text-xs md:text-sm ml-2"> Limite atteinte</span>
     )}
   </h3>
   <button
@@ -1153,14 +1153,14 @@ const getPasswordStrengthMessage = (password) => {
       }
       setShowAddBlocModal(true);
     }}
-    className={`px-3 py-1 rounded-lg text-sm flex items-center ${
+    className={`px-3 py-1 rounded-lg text-xs md:text-sm flex items-center ${
       residenceData.blocs.length >= 11
         ? 'bg-gray-400 cursor-not-allowed'
         : 'bg-green-500 hover:bg-green-600'
     } text-white`}
     disabled={residenceData.blocs.length >= 11}
   >
-    <FaPlus className="mr-1" size={12} />
+    <FaPlus className="mr-1" size={10} className="md:size-12" />
     Ajouter un bloc
   </button>
 </div>
@@ -1168,13 +1168,13 @@ const getPasswordStrengthMessage = (password) => {
                 {residenceData.blocs.map((bloc, blocIndex) => (
                   <div key={blocIndex} className="border border-gray-200 rounded-lg overflow-hidden">
                     <div
-                      className="bg-gray-50 px-4 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-100"
+                      className="bg-gray-50 px-3 md:px-4 py-2 md:py-3 flex justify-between items-center cursor-pointer hover:bg-gray-100"
                       onClick={() => setExpandedBloc(expandedBloc === blocIndex ? null : blocIndex)}
                     >
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-2 md:space-x-3">
                         {/* Dans l'en-tête du bloc, remplace la partie editingBloc */}
 {editingBloc === blocIndex ? (
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center space-x-1 md:space-x-2">
     <input
       type="text"
       value={editedBlocName}
@@ -1184,7 +1184,7 @@ const getPasswordStrengthMessage = (password) => {
         setOriginalBlocName(bloc.nom);
         setIsEditingBlocName(true);
       }}
-      className="px-2 py-1 border border-gray-300 rounded"
+      className="px-2 py-1 text-sm md:text-base border border-gray-300 rounded"
       autoFocus
       onClick={(e) => e.stopPropagation()}
     />
@@ -1201,7 +1201,7 @@ const getPasswordStrengthMessage = (password) => {
           }}
           className="text-green-600 hover:text-green-800"
         >
-          <FaCheck size={14} />
+          <FaCheck size={12} className="md:size-14" />
         </button>
         <button
           onClick={(e) => {
@@ -1212,22 +1212,22 @@ const getPasswordStrengthMessage = (password) => {
           }}
           className="text-red-600 hover:text-red-800"
         >
-          <FaTimes size={14} />
+          <FaTimes size={12} className="md:size-14" />
         </button>
       </div>
     )}
   </div>
 ) : (
   <>
-    <FaBuilding className="text-gray-600" />
-    <span className="font-medium">{bloc.nom}</span>
-    <span className="text-sm text-gray-500">
+    <FaBuilding className="text-gray-600 text-sm md:text-base" />
+    <span className="font-medium text-sm md:text-base">{bloc.nom}</span>
+    <span className="text-xs md:text-sm text-gray-500">
       ({bloc.totalAppartements} appartements)
     </span>
   </>
 )}
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-1 md:space-x-2">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -1235,7 +1235,7 @@ const getPasswordStrengthMessage = (password) => {
                           }}
                           className="text-blue-600 hover:text-blue-800"
                         >
-                          <FaEdit size={18} />
+                          <FaEdit size={14} className="md:size-18" />
                         </button>
                         <button
   onClick={(e) => {
@@ -1245,16 +1245,16 @@ const getPasswordStrengthMessage = (password) => {
   }}
   className="text-red-600 hover:text-red-800"
 >
-  <FaTrash size={18} />
+  <FaTrash size={14} className="md:size-18" />
 </button>
-                        {expandedBloc === blocIndex ? <FaChevronUp /> : <FaChevronDown />}
+                        {expandedBloc === blocIndex ? <FaChevronUp size={14} className="md:size-18" /> : <FaChevronDown size={14} className="md:size-18" />}
                       </div>
                     </div>
 
                     {expandedBloc === blocIndex && (
-                      <div className="p-4 border-t border-gray-200">
-                        <div className="flex justify-between items-center mb-3">
-                          <h4 className="font-medium text-gray-700">Appartements</h4>
+                      <div className="p-3 md:p-4 border-t border-gray-200">
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
+                          <h4 className="font-medium text-gray-700 text-sm md:text-base">Appartements</h4>
                           <div className="flex gap-2">
                             {/* Bouton pour ajouter un étage */}
                             <button
@@ -1262,9 +1262,9 @@ const getPasswordStrengthMessage = (password) => {
                                 setSelectedBlocForEtage(blocIndex);
                                 setShowEtageConfig(true);
                               }}
-                              className="bg-purple-500 hover:bg-purple-600 text-white px-2 py-1 rounded text-xs flex items-center"
+                              className="bg-purple-500 hover:bg-purple-600 text-white px-2 py-1 rounded text-xs md:text-sm flex items-center"
                             >
-                              <FaPlus className="mr-1" size={10} />
+                              <FaPlus className="mr-1" size={10} className="md:size-12" />
                               Ajouter étage
                             </button>
                             
@@ -1285,9 +1285,9 @@ const getPasswordStrengthMessage = (password) => {
     // L'effet dure 3 secondes, assez pour que l'admin voie qu'il doit choisir
     setTimeout(() => setHighlightEtage(false), 3000);
   }}
-  className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs flex items-center"
+  className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs md:text-sm flex items-center"
 >
-  <FaPlus className="mr-1" size={10} />
+  <FaPlus className="mr-1" size={10} className="md:size-12" />
   Ajouter appart
 </button>
                           </div>
@@ -1295,19 +1295,19 @@ const getPasswordStrengthMessage = (password) => {
 
                         {/* Configuration pour ajouter un étage */}
                         {showEtageConfig && selectedBlocForEtage === blocIndex && (
-                          <div className="bg-purple-50 p-4 rounded-lg mb-4 border border-purple-200">
-                            <p className="text-sm font-medium text-purple-800 mb-2">
+                          <div className="bg-purple-50 p-3 md:p-4 rounded-lg mb-4 border border-purple-200">
+                            <p className="text-xs md:text-sm font-medium text-purple-800 mb-2">
                               Ajouter un étage au bloc {bloc.nom}
                             </p>
                             <p className="text-xs text-purple-600 mb-3">
                               L'étage {bloc.etages + 1} sera créé avec le nombre d'appartements choisi
                             </p>
                             
-                            <label className="block text-sm text-gray-600 mb-1">
+                            <label className="block text-xs md:text-sm text-gray-600 mb-1">
                               Nombre d'appartements pour l'étage {bloc.etages + 1}
                             </label>
                             {etageError && (
-  <p className={`text-red-500 text-sm mt-1 ${shakeEtage ? 'animate-shake' : ''}`}>
+  <p className={`text-red-500 text-xs md:text-sm mt-1 ${shakeEtage ? 'animate-shake' : ''}`}>
     {etageError}
   </p>
 )}
@@ -1326,7 +1326,7 @@ const getPasswordStrengthMessage = (password) => {
   }}
   min="1"
   max="10"
-  className={`w-full px-3 py-2 border rounded-lg text-sm mb-3 focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
+  className={`w-full px-3 py-2 text-sm md:text-base border rounded-lg mb-3 focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
     etageError ? 'border-red-500' : 'border-purple-300'
   }`}
   autoFocus
@@ -1334,10 +1334,10 @@ const getPasswordStrengthMessage = (password) => {
 
 
                             
-                            <div className="flex space-x-2">
+                            <div className="flex flex-col sm:flex-row gap-2">
                               <button
                                 onClick={handleAddEtageWithConfig}
-                                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex-1"
+                                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium flex-1"
                               >
                                 Ajouter l'étage
                               </button>
@@ -1347,7 +1347,7 @@ const getPasswordStrengthMessage = (password) => {
                                   setSelectedBlocForEtage(null);
                                   setEtageAppartCount(4);
                                 }}
-                                className="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium"
+                                className="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg text-xs md:text-sm font-medium"
                               >
                                 Annuler
                               </button>
@@ -1386,7 +1386,7 @@ const getPasswordStrengthMessage = (password) => {
     
     setNewAppartName(suggestedName);
   }}
-  className={`w-full px-2 py-1 border rounded text-sm mb-2 transition-all duration-300 ${
+  className={`w-full px-2 py-1 border rounded text-xs md:text-sm mb-2 transition-all duration-300 ${
   highlightEtage ? 'border-yellow-600 bg-yellow-200 shadow-lg ring-2 ring-yellow-400' : 'border-gray-300'
 }`}
 >
@@ -1416,7 +1416,7 @@ const getPasswordStrengthMessage = (password) => {
                               value={newAppartName}
                               onChange={(e) => setNewAppartName(e.target.value)}
                               placeholder="Nom de l'appartement"
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm mb-2"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-xs md:text-sm mb-2"
                               autoFocus
                             />
                             
@@ -1449,11 +1449,11 @@ const getPasswordStrengthMessage = (password) => {
                         )}
                         <div className="space-y-4">
                           {bloc.appartementsParEtage.map((etageApparts, etageIndex) => (
-                            <div key={etageIndex} className="border-l-2 border-gray-200 pl-3">
+                            <div key={etageIndex} className="border-l-2 border-gray-200 pl-2 md:pl-3">
                               <h5 className="text-xs font-semibold text-gray-500 mb-2">
                                 {etageIndex === 0 ? 'Rez-de-chaussée' : `Étage ${etageIndex}`}
                               </h5>
-                              <div className="grid grid-cols-2 gap-2">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 {etageApparts?.map((appart, appartIndex) => (
                                   <div key={appartIndex} className="bg-gray-50 p-2 rounded flex justify-between items-center">
                                     {/* Dans la liste des appartements, remplace la partie editingAppart */}
@@ -1469,7 +1469,7 @@ const getPasswordStrengthMessage = (password) => {
         setIsEditingAppartName(true);
         setEditingAppartInfo({ blocIndex, etageIndex, appartIndex });
       }}
-      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+      className="w-full px-2 py-1 border border-gray-300 rounded text-xs md:text-sm"
       autoFocus
     />
     {isEditingAppartName && 
@@ -1488,7 +1488,7 @@ const getPasswordStrengthMessage = (password) => {
           }}
           className="text-green-600 hover:text-green-800"
         >
-          <FaCheck size={12} />
+          <FaCheck size={10} className="md:size-12" />
         </button>
         <button
           onClick={() => {
@@ -1499,14 +1499,14 @@ const getPasswordStrengthMessage = (password) => {
           }}
           className="text-red-600 hover:text-red-800"
         >
-          <FaTimes size={12} />
+          <FaTimes size={10} className="md:size-12" />
         </button>
       </div>
     )}
   </div>
 ) : (
   <>
-    <span className="text-sm">{appart}</span>
+    <span className="text-xs md:text-sm">{appart}</span>
     <div className="flex space-x-1">
       <button
         onClick={() => {
@@ -1518,7 +1518,7 @@ const getPasswordStrengthMessage = (password) => {
         }}
         className="text-blue-600 hover:text-blue-800"
       >
-        <FaEdit size={18} />
+        <FaEdit size={12} className="md:size-14" />
       </button>
       <button
   onClick={() => {
@@ -1528,7 +1528,7 @@ const getPasswordStrengthMessage = (password) => {
   }}
   className="text-red-600 hover:text-red-800"
 >
-  <FaTrash size={18} />
+  <FaTrash size={12} className="md:size-14" />
 </button>
     </div>
   </>
@@ -1560,27 +1560,27 @@ const getPasswordStrengthMessage = (password) => {
 {showDeleteBlocConfirm && (
   <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
     <div className="absolute inset-0 bg-black/50" onClick={() => setShowDeleteBlocConfirm(false)} />
-    <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md p-6 transform animate-fadeIn">
-      <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-        <FaExclamationTriangle className="text-red-600 text-3xl" />
+    <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md p-4 md:p-6 transform animate-fadeIn">
+      <div className="mx-auto w-12 h-12 md:w-16 md:h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+        <FaExclamationTriangle className="text-red-600 text-2xl md:text-3xl" />
       </div>
       
-      <h3 className="text-xl font-bold text-gray-800 text-center mb-2">
+      <h3 className="text-lg md:text-xl font-bold text-gray-800 text-center mb-2">
         Confirmer la suppression
       </h3>
       
-      <p className="text-gray-600 text-center mb-6">
+      <p className="text-sm md:text-base text-gray-600 text-center mb-6">
         Voulez-vous vraiment supprimer le bloc {residenceData?.blocs[blocToDelete]?.nom} ?
       </p>
       
-      <p className="text-sm text-gray-500 text-center mb-6">
+      <p className="text-xs md:text-sm text-gray-500 text-center mb-6">
         Cette action est irréversible et supprimera tous les appartements de ce bloc.
       </p>
       
-      <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         <button
           onClick={() => setShowDeleteBlocConfirm(false)}
-          className="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold transition-colors"
+          className="flex-1 px-4 py-2 md:py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold transition-colors text-sm md:text-base"
         >
           Annuler
         </button>
@@ -1590,9 +1590,9 @@ const getPasswordStrengthMessage = (password) => {
             setShowDeleteBlocConfirm(false);
             setBlocToDelete(null);
           }}
-          className="flex-1 px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+          className="flex-1 px-4 py-2 md:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
         >
-          <FaTrash size={16} />
+          <FaTrash size={14} className="md:size-16" />
           Supprimer
         </button>
       </div>
@@ -1604,27 +1604,27 @@ const getPasswordStrengthMessage = (password) => {
 {showDeleteAppartConfirm && (
   <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
     <div className="absolute inset-0 bg-black/50" onClick={() => setShowDeleteAppartConfirm(false)} />
-    <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md p-6 transform animate-fadeIn">
-      <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-        <FaExclamationTriangle className="text-red-600 text-3xl" />
+    <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md p-4 md:p-6 transform animate-fadeIn">
+      <div className="mx-auto w-12 h-12 md:w-16 md:h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+        <FaExclamationTriangle className="text-red-600 text-2xl md:text-3xl" />
       </div>
       
-      <h3 className="text-xl font-bold text-gray-800 text-center mb-2">
+      <h3 className="text-lg md:text-xl font-bold text-gray-800 text-center mb-2">
         Confirmer la suppression
       </h3>
       
-      <p className="text-gray-600 text-center mb-6">
+      <p className="text-sm md:text-base text-gray-600 text-center mb-6">
         Voulez-vous vraiment supprimer l'appartement ?
       </p>
       
-      <p className="text-sm text-gray-500 text-center mb-6">
+      <p className="text-xs md:text-sm text-gray-500 text-center mb-6">
         Cette action est irréversible.
       </p>
       
-      <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         <button
           onClick={() => setShowDeleteAppartConfirm(false)}
-          className="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold transition-colors"
+          className="flex-1 px-4 py-2 md:py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold transition-colors text-sm md:text-base"
         >
           Annuler
         </button>
@@ -1635,9 +1635,9 @@ const getPasswordStrengthMessage = (password) => {
             setAppartToDelete(null);
             setAppartDeleteInfo({ blocIndex: null, etageIndex: null, appartIndex: null });
           }}
-          className="flex-1 px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+          className="flex-1 px-4 py-2 md:py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
         >
-          <FaTrash size={16} />
+          <FaTrash size={14} className="md:size-16" />
           Supprimer
         </button>
       </div>

@@ -44,7 +44,7 @@ const useTempsRestantEssai = () => {
   return tempsRestant;
 };
 
-  const useTempsRestantAbonnement = () => {
+const useTempsRestantAbonnement = () => {
   const [tempsRestant, setTempsRestant] = useState({
     jours: 0,
     heures: 0,
@@ -310,55 +310,55 @@ const [clientInfo, setClientInfo] = useState({
         onAccept={handleAcceptTerms}
       />
       
-      {/* PLUS DE h-full overflow-y-auto ! Juste le contenu */}
-      <div className="max-w-7xl mx-auto">
+      {/* Conteneur principal responsive */}
+      <div className="w-full px-3 md:px-4">
         
         {/* Bannière Abonnement Actif (VERT) */}
 {hasActiveSubscription && (
-  <div className="max-w-2xl mx-auto mb-8">
-    <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+  <div className="w-full mb-6">
+    <div className="bg-green-50 border border-green-200 rounded-lg p-4 md:p-6">
       <FaCrown className="text-4xl text-green-500 mx-auto mb-3" />
-      <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
+      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2 text-center">
         Abonnement {getPlanName(tempsRestantAbonnement.planActif)} Actif
       </h2>
-      <p className="text-gray-600 text-center">
+      <p className="text-gray-600 text-center text-sm md:text-base">
         Vous bénéficiez de toutes les fonctionnalités d'EL BALAS.
       </p>
       
-      <div className="mt-4 p-4 bg-white rounded-lg shadow-inner">
-        <p className="text-sm text-gray-600 mb-2 text-center font-semibold">
+      <div className="mt-4 p-3 md:p-4 bg-white rounded-lg shadow-inner">
+        <p className="text-xs md:text-sm text-gray-600 mb-2 text-center font-semibold">
           Temps restant avant la fin de votre abonnement :
         </p>
-        <div className="flex justify-center gap-4 text-center">
-          <div className="bg-green-100 rounded-lg p-2 min-w-[70px]">
-            <div className="text-2xl font-bold text-green-700 font-mono">
+        <div className="flex flex-wrap justify-center gap-2 md:gap-4 text-center">
+          <div className="bg-green-100 rounded-lg p-1 md:p-2 min-w-[60px] md:min-w-[70px]">
+            <div className="text-xl md:text-2xl font-bold text-green-700 font-mono">
               {String(tempsRestantAbonnement.jours).padStart(2, '0')}
             </div>
-            <div className="text-xs text-green-600">Jours</div>
+            <div className="text-[10px] md:text-xs text-green-600">Jours</div>
           </div>
-          <div className="bg-green-100 rounded-lg p-2 min-w-[70px]">
-            <div className="text-2xl font-bold text-green-700 font-mono">
+          <div className="bg-green-100 rounded-lg p-1 md:p-2 min-w-[60px] md:min-w-[70px]">
+            <div className="text-xl md:text-2xl font-bold text-green-700 font-mono">
               {String(tempsRestantAbonnement.heures).padStart(2, '0')}
             </div>
-            <div className="text-xs text-green-600">Heures</div>
+            <div className="text-[10px] md:text-xs text-green-600">Heures</div>
           </div>
-          <div className="bg-green-100 rounded-lg p-2 min-w-[70px]">
-            <div className="text-2xl font-bold text-green-700 font-mono">
+          <div className="bg-green-100 rounded-lg p-1 md:p-2 min-w-[60px] md:min-w-[70px]">
+            <div className="text-xl md:text-2xl font-bold text-green-700 font-mono">
               {String(tempsRestantAbonnement.minutes).padStart(2, '0')}
             </div>
-            <div className="text-xs text-green-600">Minutes</div>
+            <div className="text-[10px] md:text-xs text-green-600">Minutes</div>
           </div>
-          <div className="bg-green-100 rounded-lg p-2 min-w-[70px]">
-            <div className="text-2xl font-bold text-green-700 font-mono">
+          <div className="bg-green-100 rounded-lg p-1 md:p-2 min-w-[60px] md:min-w-[70px]">
+            <div className="text-xl md:text-2xl font-bold text-green-700 font-mono">
               {String(tempsRestantAbonnement.secondes).padStart(2, '0')}
             </div>
-            <div className="text-xs text-green-600">Secondes</div>
+            <div className="text-[10px] md:text-xs text-green-600">Secondes</div>
           </div>
         </div>
       </div>
       
       {tempsRestantAbonnement.dateFin && (
-        <p className="text-sm text-gray-500 mt-3 text-center">
+        <p className="text-xs md:text-sm text-gray-500 mt-3 text-center">
           Fin de l'abonnement : {tempsRestantAbonnement.dateFin.toLocaleDateString('fr-FR')}
         </p>
       )}
@@ -368,30 +368,30 @@ const [clientInfo, setClientInfo] = useState({
 
 {/* Bannière d'expiration */}
 {!hasActiveSubscription && (
-  <div className="max-w-2xl mx-auto mb-8">
+  <div className="w-full mb-6">
     {isSubscriptionExpired() ? (
       // Bannière ORANGE pour abonnement expiré
-      <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
+      <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 md:p-6">
         <FaExclamationTriangle className="text-4xl text-orange-500 mx-auto mb-3" />
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Abonnement expiré</h2>
-        <p className="text-gray-600">Votre abonnement a expiré.</p>
-        <p className="text-orange-600 font-semibold mt-2">Veuillez renouveler votre abonnement pour continuer à utiliser EL BALAS.</p>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Abonnement expiré</h2>
+        <p className="text-gray-600 text-sm md:text-base">Votre abonnement a expiré.</p>
+        <p className="text-orange-600 font-semibold mt-2 text-sm md:text-base">Veuillez renouveler votre abonnement pour continuer à utiliser EL BALAS.</p>
         {(() => {
           let endDate = '--/--/----';
           const subscription = userData.subscription || {};
           if (subscription.monthly) endDate = new Date(subscription.monthly).toLocaleDateString('fr-FR');
           else if (subscription.semester) endDate = new Date(subscription.semester).toLocaleDateString('fr-FR');
           else if (subscription.annual) endDate = new Date(subscription.annual).toLocaleDateString('fr-FR');
-          return <p className="text-sm text-gray-500 mt-3 text-center">Fin de l'abonnement : {endDate}</p>;
+          return <p className="text-xs md:text-sm text-gray-500 mt-3 text-center">Fin de l'abonnement : {endDate}</p>;
         })()}
       </div>
     ) : isTrialExpired ? (
       // Bannière ROUGE pour essai expiré
-      <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+      <div className="bg-red-50 border border-red-200 rounded-lg p-4 md:p-6">
         <FaExclamationTriangle className="text-4xl text-red-500 mx-auto mb-3" />
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Période d'essai expirée</h2>
-        <p className="text-gray-600">Votre période d'essai gratuit de 21 jours est terminée.</p>
-        <p className="text-red-600 font-semibold mt-2">Veuillez choisir un abonnement pour continuer à utiliser EL BALAS.</p>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Période d'essai expirée</h2>
+        <p className="text-gray-600 text-sm md:text-base">Votre période d'essai gratuit de 21 jours est terminée.</p>
+        <p className="text-red-600 font-semibold mt-2 text-sm md:text-base">Veuillez choisir un abonnement pour continuer à utiliser EL BALAS.</p>
         {(() => {
           let endDate = '--/--/----';
           if (userData.termsAcceptedDate) {
@@ -400,34 +400,34 @@ const [clientInfo, setClientInfo] = useState({
             trialEnd.setDate(trialEnd.getDate() + 21);
             endDate = trialEnd.toLocaleDateString('fr-FR');
           }
-          return <p className="text-sm text-gray-500 mt-3 text-center">Fin de l'essai : {endDate}</p>;
+          return <p className="text-xs md:text-sm text-gray-500 mt-3 text-center">Fin de l'essai : {endDate}</p>;
         })()}
       </div>
     ) : termsAccepted ? (
       // Bannière BLEUE pour essai actif
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 md:p-6">
         <FaClock className="text-4xl text-blue-500 mx-auto mb-3" />
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Période d'essai gratuite</h2>
-        <p className="text-gray-600">Vous êtes actuellement en période d'essai gratuit de 21 jours. Profitez de toutes les fonctionnalités d'EL BALAS sans limitation.</p>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Période d'essai gratuite</h2>
+        <p className="text-gray-600 text-sm md:text-base">Vous êtes actuellement en période d'essai gratuit de 21 jours. Profitez de toutes les fonctionnalités d'EL BALAS sans limitation.</p>
         
-        <div className="mt-4 p-4 bg-white rounded-lg shadow-inner">
-          <p className="text-sm text-gray-600 mb-2 text-center font-semibold">Temps restant avant la fin de l'essai :</p>
-          <div className="flex justify-center gap-4 text-center">
-            <div className="bg-blue-100 rounded-lg p-2 min-w-[70px]">
-              <div className="text-2xl font-bold text-blue-700 font-mono">{String(tempsRestant.jours).padStart(2, '0')}</div>
-              <div className="text-xs text-blue-600">Jours</div>
+        <div className="mt-4 p-3 md:p-4 bg-white rounded-lg shadow-inner">
+          <p className="text-xs md:text-sm text-gray-600 mb-2 text-center font-semibold">Temps restant avant la fin de l'essai :</p>
+          <div className="flex flex-wrap justify-center gap-2 md:gap-4 text-center">
+            <div className="bg-blue-100 rounded-lg p-1 md:p-2 min-w-[60px] md:min-w-[70px]">
+              <div className="text-xl md:text-2xl font-bold text-blue-700 font-mono">{String(tempsRestant.jours).padStart(2, '0')}</div>
+              <div className="text-[10px] md:text-xs text-blue-600">Jours</div>
             </div>
-            <div className="bg-blue-100 rounded-lg p-2 min-w-[70px]">
-              <div className="text-2xl font-bold text-blue-700 font-mono">{String(tempsRestant.heures).padStart(2, '0')}</div>
-              <div className="text-xs text-blue-600">Heures</div>
+            <div className="bg-blue-100 rounded-lg p-1 md:p-2 min-w-[60px] md:min-w-[70px]">
+              <div className="text-xl md:text-2xl font-bold text-blue-700 font-mono">{String(tempsRestant.heures).padStart(2, '0')}</div>
+              <div className="text-[10px] md:text-xs text-blue-600">Heures</div>
             </div>
-            <div className="bg-blue-100 rounded-lg p-2 min-w-[70px]">
-              <div className="text-2xl font-bold text-blue-700 font-mono">{String(tempsRestant.minutes).padStart(2, '0')}</div>
-              <div className="text-xs text-blue-600">Minutes</div>
+            <div className="bg-blue-100 rounded-lg p-1 md:p-2 min-w-[60px] md:min-w-[70px]">
+              <div className="text-xl md:text-2xl font-bold text-blue-700 font-mono">{String(tempsRestant.minutes).padStart(2, '0')}</div>
+              <div className="text-[10px] md:text-xs text-blue-600">Minutes</div>
             </div>
-            <div className="bg-blue-100 rounded-lg p-2 min-w-[70px]">
-              <div className="text-2xl font-bold text-blue-700 font-mono">{String(tempsRestant.secondes).padStart(2, '0')}</div>
-              <div className="text-xs text-blue-600">Secondes</div>
+            <div className="bg-blue-100 rounded-lg p-1 md:p-2 min-w-[60px] md:min-w-[70px]">
+              <div className="text-xl md:text-2xl font-bold text-blue-700 font-mono">{String(tempsRestant.secondes).padStart(2, '0')}</div>
+              <div className="text-[10px] md:text-xs text-blue-600">Secondes</div>
             </div>
           </div>
         </div>
@@ -440,7 +440,7 @@ const [clientInfo, setClientInfo] = useState({
             trialEnd.setDate(trialEnd.getDate() + 21);
             endDate = trialEnd.toLocaleDateString('fr-FR');
           }
-          return <p className="text-sm text-gray-500 mt-3 text-center">Fin de l'essai : {endDate}</p>;
+          return <p className="text-xs md:text-sm text-gray-500 mt-3 text-center">Fin de l'essai : {endDate}</p>;
         })()}
       </div>
     ) : null}
@@ -449,7 +449,7 @@ const [clientInfo, setClientInfo] = useState({
         {!hasActiveSubscription && (
   <>
         {/* Grille des plans */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="flex flex-col md:grid md:grid-cols-3 gap-4 md:gap-8 mb-12">
           {plans.map((plan) => (
             <div
               key={plan.id}
@@ -466,11 +466,11 @@ const [clientInfo, setClientInfo] = useState({
                 </div>
               )}
               
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
+              <div className="p-6 md:p-8">
+                <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
                 <div className="mb-4">
-                  <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                  <span className="text-gray-500 ml-2">{plan.period}</span>
+                  <span className="text-3xl md:text-4xl font-bold text-gray-900">{plan.price}</span>
+                  <span className="text-gray-500 ml-2 text-sm md:text-base">{plan.period}</span>
                 </div>
                 
                 {plan.save && (
@@ -481,7 +481,7 @@ const [clientInfo, setClientInfo] = useState({
                 
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start text-gray-600">
+                    <li key={index} className="flex items-start text-gray-600 text-sm md:text-base">
                       <FaCheckCircle className="text-green-500 mt-1 mr-2 flex-shrink-0" />
                       <span>{feature}</span>
                     </li>
@@ -511,10 +511,10 @@ const [clientInfo, setClientInfo] = useState({
 
         {/* Formulaire de paiement */}
         {showBankDetails && selectedPlan && (
-          <div id="payment-form" className="max-w-2xl mx-auto mb-12">
-            <div className="bg-white rounded-2xl shadow-xl p-8 transform transition-all duration-500 animate-fadeIn">
+          <div id="payment-form" className="w-full mb-12">
+            <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 transform transition-all duration-500 animate-fadeIn">
               
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
                 Paiement sécurisé par carte bancaire
               </h2>
               

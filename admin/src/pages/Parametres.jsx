@@ -700,7 +700,7 @@ const getPasswordStrengthMessage = (password) => {
   </label>
   <div className="relative">
     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-      <FaUser size={16} className="md:size-18" />
+      <FaUser size={18} />
     </div>
     <input
       type="text"
@@ -730,7 +730,7 @@ const getPasswordStrengthMessage = (password) => {
           className="text-green-600 hover:text-green-800 bg-white rounded-full p-1"
           title="Valider"
         >
-          <FaCheck size={14} className="md:size-18" />
+          <FaCheck size={18} />
         </button>
         <button
           onClick={() => {
@@ -740,7 +740,7 @@ const getPasswordStrengthMessage = (password) => {
           className="text-red-600 hover:text-red-800 bg-white rounded-full p-1"
           title="Annuler"
         >
-          <FaTimes size={14} className="md:size-18" />
+          <FaTimes size={18} />
         </button>
       </div>
     )}
@@ -765,7 +765,7 @@ const getPasswordStrengthMessage = (password) => {
   </label>
   <div className="relative">
     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-      <FaPhone size={16} className="md:size-18" />
+      <FaPhone size={18} />
     </div>
     <input
       type="tel"
@@ -800,7 +800,7 @@ const getPasswordStrengthMessage = (password) => {
           className="text-green-600 hover:text-green-800 bg-white rounded-full p-1"
           title="Valider"
         >
-          <FaCheck size={14} className="md:size-18" />
+          <FaCheck size={18} />
         </button>
         <button
           onClick={() => {
@@ -811,7 +811,7 @@ const getPasswordStrengthMessage = (password) => {
           className="text-red-600 hover:text-red-800 bg-white rounded-full p-1"
           title="Annuler"
         >
-          <FaTimes size={14} className="md:size-18" />
+          <FaTimes size={18} />
         </button>
       </div>
     )}
@@ -867,7 +867,7 @@ const getPasswordStrengthMessage = (password) => {
       onClick={() => setShowCurrentPassword(!showCurrentPassword)}
       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
     >
-      {showCurrentPassword ? <FaEyeSlash size={16} className="md:size-18" /> : <FaEye size={16} className="md:size-18" />}
+      {showCurrentPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
     </button>
   </div>
   {currentPasswordError && (
@@ -898,7 +898,8 @@ const getPasswordStrengthMessage = (password) => {
       onClick={() => setShowNewPassword(!showNewPassword)}
       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
     >
-      {showNewPassword ? <FaEyeSlash size={16} className="md:size-18" /> : <FaEye size={16} className="md:size-18" />}
+      {showNewPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+
     </button>
   </div>
   {passwordData.newPassword && (
@@ -933,7 +934,7 @@ const getPasswordStrengthMessage = (password) => {
       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
     >
-      {showConfirmPassword ? <FaEyeSlash size={16} className="md:size-18" /> : <FaEye size={16} className="md:size-18" />}
+      {showConfirmPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
     </button>
   </div>
   {confirmPasswordError && (
@@ -1073,7 +1074,7 @@ const getPasswordStrengthMessage = (password) => {
   }}
   className="text-white hover:text-gray-200"
 >
-  <FaTimes size={20} className="md:size-24" />
+  <FaTimes size={24} />
 </button>
             </div>
 
@@ -1118,7 +1119,7 @@ const getPasswordStrengthMessage = (password) => {
                         className="text-green-600 hover:text-green-800 bg-white rounded-full p-1"
                         title="Valider"
                       >
-                        <FaCheck size={14} className="md:size-18" />
+                        <FaCheck size={18} />
                       </button>
                       
                       {/* X rouge - Annuler */}
@@ -1130,7 +1131,7 @@ const getPasswordStrengthMessage = (password) => {
                         className="text-red-600 hover:text-red-800 bg-white rounded-full p-1"
                         title="Annuler"
                       >
-                        <FaTimes size={14} className="md:size-18" />
+                        <FaTimes size={18} />
                       </button>
                     </div>
                   )}
@@ -1160,7 +1161,7 @@ const getPasswordStrengthMessage = (password) => {
     } text-white`}
     disabled={residenceData.blocs.length >= 11}
   >
-    <FaPlus className="mr-1" size={10} className="md:size-12" />
+    <FaPlus className="mr-1" size={12} />
     Ajouter un bloc
   </button>
 </div>
@@ -1201,7 +1202,7 @@ const getPasswordStrengthMessage = (password) => {
           }}
           className="text-green-600 hover:text-green-800"
         >
-          <FaCheck size={12} className="md:size-14" />
+          <FaCheck size={14} />
         </button>
         <button
           onClick={(e) => {
@@ -1212,7 +1213,7 @@ const getPasswordStrengthMessage = (password) => {
           }}
           className="text-red-600 hover:text-red-800"
         >
-          <FaTimes size={12} className="md:size-14" />
+          <FaTimes size={14} />
         </button>
       </div>
     )}
@@ -1235,7 +1236,7 @@ const getPasswordStrengthMessage = (password) => {
                           }}
                           className="text-blue-600 hover:text-blue-800"
                         >
-                          <FaEdit size={14} className="md:size-18" />
+                          <FaEdit size={18} />
                         </button>
                         <button
   onClick={(e) => {
@@ -1245,9 +1246,9 @@ const getPasswordStrengthMessage = (password) => {
   }}
   className="text-red-600 hover:text-red-800"
 >
-  <FaTrash size={14} className="md:size-18" />
+  <FaTrash size={18} />
 </button>
-                        {expandedBloc === blocIndex ? <FaChevronUp size={14} className="md:size-18" /> : <FaChevronDown size={14} className="md:size-18" />}
+                        {expandedBloc === blocIndex ? <FaChevronUp /> : <FaChevronDown />}
                       </div>
                     </div>
 
@@ -1264,7 +1265,7 @@ const getPasswordStrengthMessage = (password) => {
                               }}
                               className="bg-purple-500 hover:bg-purple-600 text-white px-2 py-1 rounded text-xs md:text-sm flex items-center"
                             >
-                              <FaPlus className="mr-1" size={10} className="md:size-12" />
+                              <FaPlus className="mr-1" size={12} />
                               Ajouter étage
                             </button>
                             
@@ -1287,7 +1288,7 @@ const getPasswordStrengthMessage = (password) => {
   }}
   className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs md:text-sm flex items-center"
 >
-  <FaPlus className="mr-1" size={10} className="md:size-12" />
+  <FaPlus className="mr-1" size={12} />
   Ajouter appart
 </button>
                           </div>
@@ -1488,7 +1489,7 @@ const getPasswordStrengthMessage = (password) => {
           }}
           className="text-green-600 hover:text-green-800"
         >
-          <FaCheck size={10} className="md:size-12" />
+          <FaCheck size={12} />
         </button>
         <button
           onClick={() => {
@@ -1499,7 +1500,7 @@ const getPasswordStrengthMessage = (password) => {
           }}
           className="text-red-600 hover:text-red-800"
         >
-          <FaTimes size={10} className="md:size-12" />
+          <FaTimes size={12} />
         </button>
       </div>
     )}
@@ -1518,7 +1519,7 @@ const getPasswordStrengthMessage = (password) => {
         }}
         className="text-blue-600 hover:text-blue-800"
       >
-        <FaEdit size={12} className="md:size-14" />
+        <FaEdit size={14} />
       </button>
       <button
   onClick={() => {
@@ -1528,7 +1529,7 @@ const getPasswordStrengthMessage = (password) => {
   }}
   className="text-red-600 hover:text-red-800"
 >
-  <FaTrash size={12} className="md:size-14" />
+  <FaTrash size={14} />
 </button>
     </div>
   </>

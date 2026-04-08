@@ -85,13 +85,13 @@ const isSubscriptionExpired = () => {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200 py-4 px-4 md:px-6">
+    <nav className="bg-white shadow-sm border-b border-gray-200 py-2 px-3 md:py-4 md:px-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-800 ml-14 md:ml-0">
+        <h1 className="text-base md:text-xl font-bold text-gray-800 ml-12 md:ml-0 truncate max-w-[180px] md:max-w-none">
           {pageTitle}
         </h1>
         
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 md:space-x-4">
           {/* Icône de notification avec badge */}
           <div className="relative">
             <button
@@ -108,11 +108,11 @@ const isSubscriptionExpired = () => {
     }
     setShowNotifications(!showNotifications);
   }}
-  className="relative p-2 text-gray-600 hover:text-yellow-600 hover:bg-gray-100 rounded-full transition-colors"
+  className="relative p-1.5 md:p-2 text-gray-600 hover:text-yellow-600 hover:bg-gray-100 rounded-full transition-colors"
 >
-              <FaBell size={20} />
+              <FaBell size={16} className="md:size-20" />
               {userUnreadCount > 0 && ( 
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] md:text-xs rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center animate-pulse">
                   {userUnreadCount}  
                 </span>
               )}
@@ -125,7 +125,7 @@ const isSubscriptionExpired = () => {
                   className="fixed inset-0 z-[60]"
                   onClick={() => setShowNotifications(false)}
                 />
-                <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-[70]">
+                <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] md:w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-[70]">
                   <div className="p-3 border-b border-gray-200 flex justify-between items-center">
                     <h3 className="font-semibold text-gray-800">Notifications</h3>
                     <div className="flex items-center gap-2">

@@ -125,7 +125,7 @@ const isSubscriptionExpired = () => {
                   className="fixed inset-0 z-[60]"
                   onClick={() => setShowNotifications(false)}
                 />
-                <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-[70]">
+                <div className="absolute right-0 mt-2 w-80 max-w-[90vw] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-xl border border-gray-200">
                   <div className="p-3 border-b border-gray-200 flex justify-between items-center">
                     <h3 className="font-semibold text-gray-800">Notifications</h3>
                     <div className="flex items-center gap-2">

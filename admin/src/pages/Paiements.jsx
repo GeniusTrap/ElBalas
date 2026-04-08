@@ -311,7 +311,7 @@ const [clientInfo, setClientInfo] = useState({
       />
       
       {/* PLUS DE h-full overflow-y-auto ! Juste le contenu */}
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-2 md:px-0 overflow-x-hidden">
         
         {/* Bannière Abonnement Actif (VERT) */}
 {hasActiveSubscription && (

@@ -110,7 +110,8 @@ const isSubscriptionExpired = () => {
   }}
   className="relative p-1.5 md:p-2 text-gray-600 hover:text-yellow-600 hover:bg-gray-100 rounded-full transition-colors"
 >
-              <FaBell size={16} className="md:size-20" />
+              <FaBell size={20} />
+
               {userUnreadCount > 0 && ( 
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] md:text-xs rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center animate-pulse">
                   {userUnreadCount}  

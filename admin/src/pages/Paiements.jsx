@@ -329,7 +329,7 @@ const [clientInfo, setClientInfo] = useState({
         <p className="text-sm text-gray-600 mb-2 text-center font-semibold">
           Temps restant avant la fin de votre abonnement :
         </p>
-        <div className="flex justify-center gap-2 md:gap-4 text-center overflow-x-auto px-2">
+        <div className="flex justify-center gap-4 text-center">
           <div className="bg-green-100 rounded-lg p-2 min-w-[70px]">
             <div className="text-2xl font-bold text-green-700 font-mono">
               {String(tempsRestantAbonnement.jours).padStart(2, '0')}
@@ -412,7 +412,7 @@ const [clientInfo, setClientInfo] = useState({
         
         <div className="mt-4 p-4 bg-white rounded-lg shadow-inner">
           <p className="text-sm text-gray-600 mb-2 text-center font-semibold">Temps restant avant la fin de l'essai :</p>
-          <div className="flex justify-center gap-2 md:gap-4 text-center overflow-x-auto px-2">
+          <div className="flex justify-center gap-4 text-center">
             <div className="bg-blue-100 rounded-lg p-2 min-w-[70px]">
               <div className="text-2xl font-bold text-blue-700 font-mono">{String(tempsRestant.jours).padStart(2, '0')}</div>
               <div className="text-xs text-blue-600">Jours</div>
@@ -449,13 +449,12 @@ const [clientInfo, setClientInfo] = useState({
         {!hasActiveSubscription && (
   <>
         {/* Grille des plans */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-12 overflow-x-auto px-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {plans.map((plan) => (
             <div
-  key={plan.id}
-  className={`
-    min-w-[280px] md:min-w-0
-    bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300
+              key={plan.id}
+              className={`
+                bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300
                 hover:scale-105 hover:shadow-2xl
                 ${plan.popular ? 'ring-2 ring-yellow-500 relative' : ''}
                 ${selectedPlan?.id === plan.id ? 'ring-4 ring-green-500' : ''}

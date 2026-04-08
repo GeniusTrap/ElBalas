@@ -111,11 +111,11 @@ const isSubscriptionExpired = () => {
     <>
       {!isMobileOpen && hasAcceptedTerms && !showExpiredModal && (
         <button
-          onClick={() => setIsMobileOpen(true)}
-          className="md:hidden fixed top-4 left-4 z-[201] p-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-full shadow-lg hover:scale-110 transition-transform"
-        >
-          <FaBars size={20} />
-        </button>
+  onClick={() => setIsMobileOpen(true)}
+  className="md:hidden fixed top-2 left-2 z-[201] p-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-full shadow-lg hover:scale-110 transition-transform"
+>
+  <FaBars size={16} />
+</button>
       )}
 
       {/* Sidebar Desktop */}

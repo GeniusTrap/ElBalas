@@ -438,7 +438,7 @@ const verifyCodeAutomatically = async (fullCode) => {
                 </div>
 
                 <form onSubmit={handleSubmit}>
-                  <div className="flex justify-between gap-2 mb-6">
+                  <div className="flex justify-between gap-1 md:gap-2 mb-6">
                     {code.map((digit, index) => (
                       <input
                         key={index}
@@ -450,7 +450,7 @@ const verifyCodeAutomatically = async (fullCode) => {
                         value={digit}
                         onChange={(e) => handleCodeChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
-                        className="w-12 h-12 text-center text-2xl font-bold border-2 border-gray-300 rounded-lg focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                        className="w-10 h-10 md:w-12 md:h-12 text-center text-xl md:text-2xl font-bold border-2 border-gray-300 rounded-lg focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
                         disabled={loading || codeInvalidated}
                       />
                     ))}

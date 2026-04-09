@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { assets } from '../assets/assets';
 
 const Sidebar = ({ onLogout, showExpiredModal }) => {  
-  console.log('📁 [Sidebar] RENDER COMPLET - pathname:', window.location.pathname);
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -66,14 +65,12 @@ const isSubscriptionExpired = () => {
 };
 
   const handleNavigation = (path) => {
-    console.log('📁 [Sidebar] handleNavigation appelé vers:', path, 'pathname actuel:', window.location.pathname);
   const allowedPaths = ['/paiements', '/paiement/succes', '/paiement/annule', '/parametres'];
 
   const currentPath = window.location.pathname;
     const paymentPaths = ['/paiements', '/paiement/succes', '/paiement/annule'];
     
     if (paymentPaths.includes(currentPath)) {
-      console.log('🚫 [Sidebar] Sur page paiement - Navigation directe sans modal vers:', path);
       navigate(path);
       return;
     }
@@ -81,17 +78,14 @@ const isSubscriptionExpired = () => {
   const subscriptionExpired = isSubscriptionExpired();
   const trialExpired = isTrialExpired();
 
-  console.log('📁 [Sidebar] subscriptionExpired:', subscriptionExpired, 'trialExpired:', trialExpired);
   
 
   if (subscriptionExpired && !allowedPaths.includes(path)) {
-    console.log('🚨 [Sidebar] Déclenchement modal ORANGE');
     window.dispatchEvent(new CustomEvent('showExpiredSubscriptionModal'));
     return;
   }
   
   if (isTrialExpired() && !allowedPaths.includes(path)) {
-    console.log('🚨 [Sidebar] Déclenchement modal ROUGE');
     window.dispatchEvent(new CustomEvent('showExpiredModal'));
     return;
   }

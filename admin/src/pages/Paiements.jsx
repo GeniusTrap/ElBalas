@@ -209,8 +209,6 @@ if (userData.termsAcceptedDate) {
   ];
 
   const handlePlanSelect = (plan) => {
-    console.log('🎯 [Paiements] Plan sélectionné:', plan);
-  console.log('🎯 [Paiements] showBankDetails avant:', showBankDetails);
     setSelectedPlan(plan);
     setShowBankDetails(true);
     setPaymentStatus('pending');
@@ -223,7 +221,6 @@ if (userData.termsAcceptedDate) {
       });
     }
   }, 100);
-    console.log('🎯 [Paiements] showBankDetails après:', true);
   };
 
   const connectedUser = JSON.parse(sessionStorage.getItem('userData') || '{}');
@@ -236,26 +233,18 @@ const [clientInfo, setClientInfo] = useState({
 
   const handleDHMADPayment = async (e) => {
   e.preventDefault();
-  console.log('💳 [Paiements] Début paiement DHMAD');
   setIsProcessingPayment(true);
   
   if (!selectedPlan) {
-    console.log('❌ [Paiements] Pas de plan sélectionné');
     alert('Veuillez choisir un plan');
     return;
   }
 
   if (!clientInfo.fullName || !clientInfo.email) {
-    console.log('❌ [Paiements] Infos client manquantes');
     alert('Veuillez remplir vos informations');
     setIsProcessingPayment(false);
     return;
   }
-  console.log('📦 [Paiements] Envoi requête:', {
-    amount: selectedPlan.priceValue,
-    plan: selectedPlan.planKey,
-    clientInfo: clientInfo
-  });
 
   try {
     const response = await fetch(`${backendUrl}/api/paiements/create-checkout-session`, {
@@ -272,14 +261,10 @@ const [clientInfo, setClientInfo] = useState({
     });
     
     const data = await response.json();
-    console.log('📡 [Paiements] Réponse serveur:', data);
     
     if (data.success) {
-      console.log('✅ [Paiements] Redirection vers:', data.payment_url);
-      console.log('🎯 [Paiements] disableExpirationChecks devrait être true sur cette page');
       window.location.href = data.payment_url;
     } else {
-      console.log('❌ [Paiements] Erreur:', data.message);
       alert('Erreur: ' + data.message);
       setIsProcessingPayment(false);
     }

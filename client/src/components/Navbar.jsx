@@ -20,7 +20,6 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Fonctions de scroll
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -44,11 +43,10 @@ const Navbar = () => {
 
   return (
     <nav className="w-full fixed top-0 z-50 bg-transparent">
-      <div className="px-10 py-3"> 
-        <div className="flex justify-between items-center">
+      <div className="px-4 md:px-10 py-3"> 
+        <div className="flex justify-between items-center gap-4 md:gap-0">
           
-          {/* Logo - toujours visible à gauche */}
-          <button onClick={scrollToTop} className="flex-shrink-0 sticky left-0 cursor-pointer"> 
+          <button onClick={scrollToTop} className="flex-shrink-0 sticky left-0 cursor-pointer mr-6 md:mr-0"> 
             <img 
               src={assets.elbalas}  
               alt="EL BALAS" 

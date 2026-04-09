@@ -39,9 +39,7 @@ export const register = async (req, res) => {
       }
       
       // Si l'utilisateur existe mais n'a PAS vérifié son email → supprimer l'ancien
-      console.log(`🔄 Compte non vérifié trouvé pour ${email}, suppression et remplacement...`);
       await User.findByIdAndDelete(existingUser._id);
-      console.log(`✅ Ancien compte non vérifié supprimé: ${email}`);
     }
 
     const isValidDomain = await validateEmailDomain(email);
@@ -65,7 +63,6 @@ export const register = async (req, res) => {
     });
 
     await newUser.save();
-    console.log(`✅ Nouveau compte créé pour: ${email}`);
 
     const token = jwt.sign(
       { id: newUser._id, email: newUser.email, role: newUser.role },
@@ -264,25 +261,17 @@ export const updateProfile = async (req, res) => {
 export const forceRefresh = async (req, res) => {
   try {
     const userId = req.user.id;
-    console.log('🔄 [SERVER] Force refresh pour user:', userId);
     
     const user = await User.findById(userId).select('-password');
     
     
     if (!user) {
-      console.log('❌ [SERVER] Utilisateur non trouvé');
       return res.status(404).json({ 
         success: false, 
         message: 'Utilisateur non trouvé' 
       });
     }
 
-    console.log('📊 [SERVER] Données utilisateur:', {
-      id: user._id,
-      termsAccepted: user.termsAccepted,
-      termsAcceptedDate: user.termsAcceptedDate,
-      subscription: user.subscription
-    });
     
     res.json({
       success: true,
@@ -540,7 +529,6 @@ export const deleteUnverifiedAccount = async (req, res) => {
     // Supprimer l'utilisateur
     await User.findByIdAndDelete(user._id);
     
-    console.log(`✅ Compte non vérifié supprimé: ${email}`);
     
     res.json({ 
       success: true, 

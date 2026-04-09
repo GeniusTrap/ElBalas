@@ -15,7 +15,6 @@ const PaiementSucces = () => {
 
   useEffect(() => {
     sessionStorage.setItem('disableAllExpirationChecks', 'true');
-    console.log('🔒 [PaiementSucces] Vérifications d\'expiration désactivées');
     
     const verifyPayment = async () => {
   if (!sessionId && !escrowId) {
@@ -40,13 +39,11 @@ const PaiementSucces = () => {
         (sub.annual && new Date(sub.annual) > maintenant);
       
       if (hasActive) {
-        console.log('✅ Abonnement déjà actif (webhook)');
         setLoading(false);
         return;
       }
     }
   } catch (err) {
-    console.log('Erreur vérification:', err);
   }
   
   if (testMode) {
@@ -121,7 +118,6 @@ const PaiementSucces = () => {
     
     const timer = setTimeout(() => {
       sessionStorage.removeItem('disableAllExpirationChecks');
-      console.log('🔓 [PaiementSucces] Vérifications d\'expiration réactivées');
     }, 10000);
     
     return () => clearTimeout(timer);

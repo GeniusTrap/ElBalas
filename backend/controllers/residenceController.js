@@ -47,11 +47,6 @@ export const createResidence = async (req, res) => {
       { residenceId: newResidence._id },
       { new: true }  
     );
-    console.log('✅ [createResidence] Utilisateur mis à jour:', {
-      id: updatedUser?._id,
-      email: updatedUser?.email,
-      residenceId: updatedUser?.residenceId
-    });
     
     res.status(201).json({
       success: true,

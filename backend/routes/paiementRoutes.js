@@ -18,7 +18,6 @@ router.post('/create-checkout-session', protect, async (req, res) => {
     const { amount, plan, clientInfo } = req.body;
     const user = await User.findById(req.user.id);
     
-    console.log('💳 [DHMAD] Création session:', { amount, plan, clientInfo });
     
     const config = getDHMADConfig();
     
@@ -30,7 +29,6 @@ router.post('/create-checkout-session', protect, async (req, res) => {
       developerFeePercentage: 0
     };
     
-    console.log('📝 [DHMAD] Création escrow:', escrowData);
     
     const escrowResponse = await axios.post(
       `${config.baseURL}/escrows`,
@@ -43,7 +41,6 @@ router.post('/create-checkout-session', protect, async (req, res) => {
       }
     );
     
-    console.log('✅ [DHMAD] Escrow créé:', escrowResponse.data);
     
     const escrowId = escrowResponse.data.escrow.id;
     
@@ -58,8 +55,6 @@ router.post('/create-checkout-session', protect, async (req, res) => {
   }
 };
     
-    console.log('🔗 [DHMAD] Création checkout session pour escrow:', escrowId);
-    console.log('📦 [DHMAD] Données envoyées à DHMAD:', JSON.stringify(checkoutData, null, 2));
     
     const checkoutResponse = await axios.post(
       `${config.baseURL}/escrows/${escrowId}/sessions`,
@@ -72,7 +67,6 @@ router.post('/create-checkout-session', protect, async (req, res) => {
       }
     );
     
-    console.log('✅ [DHMAD] Checkout session créé:', checkoutResponse.data);
     
     const paymentUrl = checkoutResponse.data.url || checkoutResponse.data.checkout_url;
     
@@ -107,20 +101,12 @@ router.post('/create-checkout-session', protect, async (req, res) => {
 router.post('/webhook', express.json({ type: 'application/json' }), async (req, res) => {
   try {
     const event = req.body;
-    console.log('📡 [WEBHOOK] Reçu:', JSON.stringify(event, null, 2));
     
     // 🔥 Quand l'escrow est payé, activer l'abonnement
     if (event.type === 'escrow.status.updated' && event.data?.escrow?.status === 'paid') {
       const escrowData = event.data.escrow;
       
-      // Récupérer l'email depuis les métadonnées (qui sont dans checkoutResponse)
-      // Pour l'instant, on ne peut pas car les métadonnées ne sont pas dans le webhook
-      // Solution alternative : récupérer via l'API DHMAD
-      
-      console.log(`💰 Paiement reçu pour escrow ${escrowData.id}`);
-      console.log(`👤 Buyer ID: ${escrowData.buyer?._id}`);
-      
-      // On va récupérer les détails de l'escrow via l'API pour avoir l'email
+
       const config = getDHMADConfig();
       const escrowDetails = await axios.get(
         `${config.baseURL}/escrows/${escrowData.id}`,
@@ -136,7 +122,6 @@ router.post('/webhook', express.json({ type: 'application/json' }), async (req, 
       if (title?.includes('semester')) plan = 'semester';
       if (title?.includes('annual')) plan = 'annual';
       
-      console.log(`💰 Buyer email: ${buyerEmail}, plan: ${plan}`);
       
       // Trouver l'utilisateur par email
       const user = await User.findOne({ email: buyerEmail });
@@ -166,19 +151,16 @@ router.post('/webhook', express.json({ type: 'application/json' }), async (req, 
         }
         
         await user.save();
-        console.log('✅ Abonnement activé via webhook pour:', buyerEmail);
         try {
           await axios.post(
             `${config.baseURL}/escrows/${escrowData.id}/deliver`,
             {},
             { headers: { 'Authorization': `Bearer ${config.apiKey}` } }
           );
-          console.log('✅ Livraison automatique effectuée, fonds libérés');
         } catch (deliverError) {
           console.error('❌ Erreur livraison:', deliverError.response?.data);
         }
       } else {
-        console.log('❌ Utilisateur non trouvé:', buyerEmail);
       }
     }
     

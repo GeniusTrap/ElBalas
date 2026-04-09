@@ -204,14 +204,12 @@ useEffect(() => {
 
   const disableAllChecks = sessionStorage.getItem('disableAllExpirationChecks') === 'true';
   if (disableAllChecks) {
-    console.log('🚫 [App] Vérifications d\'expiration désactivées temporairement');
     return;
   }
   
   const pathname = window.location.pathname;
   const paymentPaths = ['/paiements', '/paiement/succes', '/paiement/annule'];
   if (paymentPaths.includes(pathname)) {
-    console.log('🚫 Sur page paiement - Pas de modal expiration');
     return;
   }
   
@@ -244,10 +242,8 @@ useEffect(() => {
   }
   
   if (isSubscriptionExpired) {
-    console.log('🟠 [App] Activation modal ORANGE - abonnement expiré');
     setShowExpiredSubscriptionModal(true);
   } else if (isTrialExpired) {
-    console.log('🔴 [App] Activation modal ROUGE - essai expiré');
     setShowExpiredModal(true);
   }
 }, [loadingUser]);
@@ -432,7 +428,6 @@ if (error.name === 'AbortError' || error.message.includes('Failed to fetch')) {
 };
 
   const AdminLayout = ({ children, disableExpirationChecks = false }) => {
-  console.log('🏠 [AdminLayout] Render avec disableExpirationChecks =', disableExpirationChecks);
   const userData = JSON.parse(sessionStorage.getItem('userData') || '{}');
   const subscription = userData.subscription || {};
   const maintenant = new Date();
@@ -485,28 +480,14 @@ if (error.name === 'AbortError' || error.message.includes('Failed to fetch')) {
   const allowedPaths = ['/paiements', '/paiement/succes', '/paiement/annule', '/parametres'];
   
   useEffect(() => {
-  console.log('🔴 [AdminLayout] Vérification expiration:', {
-    disableExpirationChecks,
-    isExpired,
-    pathname,
-    allowedPaths,
-    isSubscriptionExpired,
-    isTrialExpired,
-    shouldShowModal: !disableExpirationChecks && isExpired && !allowedPaths.includes(pathname)
-  });
   
-  // 🔥 NE PAS afficher les modals si on désactive les vérifications
   if (!disableExpirationChecks && isExpired && !allowedPaths.includes(pathname)) {
-    console.log('🚨 [AdminLayout] AFFICHAGE MODAL - Condition déclenchée!');
     if (isSubscriptionExpired) {
-      console.log('🚨 Affichage modal ORANGE (abonnement expiré)');
       setShowExpiredSubscriptionModal(true);
     } else {
-      console.log('🚨 Affichage modal ROUGE (essai expiré)');
       setShowExpiredModal(true);
     }
   } else {
-    console.log('✅ [AdminLayout] PAS de modal - Condition bloquée');
   }
 }, [pathname, isExpired, isSubscriptionExpired, disableExpirationChecks, isTrialExpired]);
   
@@ -637,7 +618,6 @@ if (error.name === 'AbortError' || error.message.includes('Failed to fetch')) {
           />
 
           {showExpiredModal && (
-            console.log('🔥🔥🔥 MODAL ROUGE VISIBLE À L\'ÉCRAN - showExpiredModal =', showExpiredModal, 'pathname:', window.location.pathname),
   <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
     <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowExpiredModal(false)} />
     <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-fadeIn">
@@ -667,7 +647,6 @@ if (error.name === 'AbortError' || error.message.includes('Failed to fetch')) {
 )}
 
 {showExpiredSubscriptionModal && (
-  console.log('🟠🟠🟠 MODAL ORANGE VISIBLE À L\'ÉCRAN - showExpiredSubscriptionModal =', showExpiredSubscriptionModal, 'pathname:', window.location.pathname),
   <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
     <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowExpiredSubscriptionModal(false)} />
     <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-fadeIn">

@@ -75,7 +75,6 @@ const VerifyEmailCode = ({ navigate, setIsAuthenticated }) => {
       const data = await response.json();
       
       if (data.success) {
-        console.log('✅ Compte non vérifié supprimé avec succès');
       } else {
         console.error('❌ Erreur suppression compte:', data.message);
       }

@@ -277,6 +277,28 @@ const verifyCodeAutomatically = async (fullCode) => {
     }
   };
 
+  const handlePaste = (e) => {
+  e.preventDefault();
+  const pastedData = e.clipboardData.getData('text');
+  const pastedNumbers = pastedData.replace(/\D/g, '').slice(0, 6);
+  
+  if (pastedNumbers.length > 0) {
+    const newCode = [...code];
+    for (let i = 0; i < pastedNumbers.length && i < 6; i++) {
+      newCode[i] = pastedNumbers[i];
+    }
+    setCode(newCode);
+    
+    const firstEmptyIndex = newCode.findIndex(digit => digit === '');
+    if (firstEmptyIndex !== -1) {
+      document.getElementById(`code-${firstEmptyIndex}`)?.focus();
+    } else if (newCode.every(digit => digit !== '')) {
+      const fullCode = newCode.join('');
+      verifyCodeAutomatically(fullCode);
+    }
+  }
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -438,7 +460,7 @@ const verifyCodeAutomatically = async (fullCode) => {
                 </div>
 
                 <form onSubmit={handleSubmit}>
-                  <div className="flex justify-between gap-1 md:gap-2 mb-6">
+                  <div className="flex justify-between gap-1 md:gap-2 mb-6" onPaste={handlePaste}>
                     {code.map((digit, index) => (
                       <input
                         key={index}

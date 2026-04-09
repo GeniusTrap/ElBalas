@@ -564,12 +564,6 @@ const VerifyEmailCode = ({ navigate, setIsAuthenticated }) => {
                   </button>
                 </p>
 
-                <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <p className="text-yellow-700 text-xs text-center">
-                    ⚠️ Attention : Si vous fermez cet onglet ou rafraîchissez la page sans vérifier votre code,<br />
-                    votre compte sera définitivement supprimé.
-                  </p>
-                </div>
               </>
             )}
           </div>

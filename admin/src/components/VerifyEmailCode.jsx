@@ -560,7 +560,7 @@ const VerifyEmailCode = ({ navigate, setIsAuthenticated }) => {
                     onClick={handleBackToLogin}
                     className="text-red-600 hover:text-red-700 font-semibold hover:underline focus:outline-none"
                   >
-                    Retour à la connexion (le compte sera supprimé)
+                    Retour à la connexion 
                   </button>
                 </p>
 

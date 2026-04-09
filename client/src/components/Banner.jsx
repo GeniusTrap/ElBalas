@@ -4,9 +4,15 @@ import { assets } from '../assets/assets';
 const Banner = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
+  const scrollToHowItWorks = () => {
+    const element = document.getElementById('how-it-works');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Vidéo de fond */}
       <video
         autoPlay
         loop
@@ -23,7 +29,6 @@ const Banner = () => {
 
       <div className="absolute inset-0 bg-black/40" />
 
-      {/* Contenu */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10">
         <h1 className="text-5xl md:text-7xl font-bold mb-4 text-center">
           <span className="text-yellow-500">EL BALAS</span>
@@ -31,7 +36,7 @@ const Banner = () => {
         <p className="text-xl md:text-2xl mb-8 text-center max-w-2xl px-4">
           Votre résidence dans un cadre
         </p>
-        <button className="bg-gradient-to-r from-yellow-600 to-yellow-500 text-black px-8 py-3 rounded-md font-semibold text-lg hover:from-yellow-500 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105">
+        <button onClick={scrollToHowItWorks} className="bg-gradient-to-r from-yellow-600 to-yellow-500 text-black px-8 py-3 rounded-md font-semibold text-lg hover:from-yellow-500 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105">
           Découvrir
         </button>
       </div>

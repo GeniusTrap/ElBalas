@@ -141,7 +141,7 @@ const isSubscriptionExpired = () => {
                 isActive(item.path) ? 'border-l-4 border-yellow-500 bg-gray-800' : ''
               }`}
             >
-              <item.icon className="text-xl mr-4" />
+              <item.icon className="text-xl mr-4 text-yellow-500" />
               <span className="font-medium">{item.label}</span>
             </button>
           ))}
@@ -153,7 +153,7 @@ const isSubscriptionExpired = () => {
             onClick={onLogout}
             className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
           >
-            <FaSignOutAlt className="text-lg" />
+            <FaSignOutAlt className="text-lg text-yellow-500" />
             <span className="font-medium">Déconnexion</span>
           </button>
         </div>
@@ -195,7 +195,7 @@ const isSubscriptionExpired = () => {
     isActive(item.path) ? 'border-l-4 border-yellow-500 bg-gray-800' : ''
   }`}
 >
-          <item.icon className="text-xl mr-4" />
+          <item.icon className="text-xl mr-4 text-yellow-500" />
           <span className="font-medium">{item.label}</span>
         </button>
       ))}
@@ -207,7 +207,7 @@ const isSubscriptionExpired = () => {
         onClick={onLogout}
         className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
       >
-        <FaSignOutAlt className="text-lg" />
+        <FaSignOutAlt className="text-lg text-yellow-500" />
         <span className="font-medium">Déconnexion</span>
       </button>
     </div>

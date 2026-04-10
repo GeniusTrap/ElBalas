@@ -406,11 +406,12 @@ const Locataires = ({ residenceData }) => {
   const [showDeleteLocataireModal, setShowDeleteLocataireModal] = useState(false);
   const [showTransfertLocataireModal, setShowTransfertLocataireModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-const [searchResults, setSearchResults] = useState([]);
-const [showSearchResults, setShowSearchResults] = useState(false);
-const [allLocataires, setAllLocataires] = useState([]);
-const [fromSearch, setFromSearch] = useState(false);
-const { addNotification } = useNotifications();
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const [allLocataires, setAllLocataires] = useState([]);
+  const [allAppartements, setAllAppartements] = useState([]);
+  const [fromSearch, setFromSearch] = useState(false);
+  const { addNotification } = useNotifications();
 
 
 useEffect(() => {
@@ -447,6 +448,21 @@ useEffect(() => {
       });
       setLocatairesData(locatairesParAppart);
       setAllLocataires(data.locataires);
+      const apparts = [];
+if (residenceData?.blocs) {
+  residenceData.blocs.forEach(bloc => {
+    if (bloc.appartementsParEtage) {
+      bloc.appartementsParEtage.flat().forEach(appart => {
+        apparts.push({
+          nom: appart,
+          bloc: bloc.nom,
+          estOccupe: (locatairesParAppart[appart] || 0) > 0
+        });
+      });
+    }
+  });
+}
+setAllAppartements(apparts);
     }
   } catch (error) {
     console.error('Erreur chargement locataires:', error);
@@ -483,40 +499,57 @@ useEffect(() => {
   const results = [];
   
   allLocataires.forEach(loc => {
-    if (loc.type === 'famille') {
-      // Recherche dans les familles
-      if (loc.nomFamille.toLowerCase().includes(term)) {
-        results.push({
-          id: loc._id,
-          type: 'famille',
-          nom: loc.nomFamille,
-          telephone: loc.telephoneFamille,
-          bloc: loc.blocNom,
-          appartement: loc.appartementNom,
-          membres: loc.nombreMembres
-        });
-      }
-    } else {
-      // Recherche dans les individus
-      loc.membres.forEach(membre => {
-        const fullName = `${membre.prenom} ${membre.nom}`.toLowerCase();
-        const phoneMatch = membre.telephone && membre.telephone.includes(term);
-        
-        if (fullName.includes(term) || phoneMatch || loc.appartementNom.toLowerCase().includes(term)) {
-          results.push({
-            id: loc._id,
-            type: 'individu',
-            nom: `${membre.prenom} ${membre.nom}`,
-            telephone: membre.telephone,
-            bloc: loc.blocNom,
-            appartement: loc.appartementNom,
-            age: membre.age,
-            membreData: membre
-          });
-        }
+  // Recherche par appartement pour TOUS les types
+  const appartementMatch = loc.appartementNom.toLowerCase().includes(term);
+  
+  if (loc.type === 'famille') {
+    // Recherche dans les familles
+    if (loc.nomFamille.toLowerCase().includes(term) || appartementMatch) {
+      results.push({
+        id: loc._id,
+        type: 'famille',
+        nom: loc.nomFamille,
+        telephone: loc.telephoneFamille,
+        bloc: loc.blocNom,
+        appartement: loc.appartementNom,
+        membres: loc.nombreMembres
       });
     }
+  } else {
+    // Recherche dans les individus
+    loc.membres.forEach(membre => {
+      const fullName = `${membre.prenom} ${membre.nom}`.toLowerCase();
+      const phoneMatch = membre.telephone && membre.telephone.includes(term);
+      
+      if (fullName.includes(term) || phoneMatch || appartementMatch) {
+        results.push({
+          id: loc._id,
+          type: 'individu',
+          nom: `${membre.prenom} ${membre.nom}`,
+          telephone: membre.telephone,
+          bloc: loc.blocNom,
+          appartement: loc.appartementNom,
+          age: membre.age,
+          membreData: membre
+        });
+      }
+    });
+  }
+});
+
+  const appartementResults = allAppartements.filter(appart => 
+  appart.nom.toLowerCase().includes(term) && !appart.estOccupe
+);
+
+appartementResults.forEach(appart => {
+  results.push({
+    type: 'appartement',
+    nom: appart.nom,
+    bloc: appart.bloc,
+    appartement: appart.nom,
+    estOccupe: appart.estOccupe
   });
+});
   
   setSearchResults(results.slice(0, 10)); 
   setShowSearchResults(results.length > 0);
@@ -722,21 +755,30 @@ const handleTransfertSuccess = (transfertData) => {
         >
           <div className="flex items-center gap-3">
             <div className={`p-2 rounded-full ${
-              result.type === 'famille' ? 'bg-purple-100' : 'bg-blue-100'
-            }`}>
-              {result.type === 'famille' ? (
-                <FaUser className="text-purple-600" size={14} />
-              ) : (
-                <FaUser className="text-blue-600" size={14} />
-              )}
-            </div>
+  result.type === 'appartement' 
+    ? (result.estOccupe ? 'bg-green-100' : 'bg-gray-100')
+    : (result.type === 'famille' ? 'bg-purple-100' : 'bg-blue-100')
+}`}>
+  {result.type === 'appartement' ? (
+    <FaHome className={result.estOccupe ? 'text-green-600' : 'text-gray-600'} size={14} />
+  ) : result.type === 'famille' ? (
+    <FaUser className="text-purple-600" size={14} />
+  ) : (
+    <FaUser className="text-blue-600" size={14} />
+  )}
+</div>
             <div className="flex-1">
               <p className="font-medium text-gray-800">{result.nom}</p>
               <p className="text-xs text-gray-500">
-                {result.bloc} • {result.appartement}
-                {result.type === 'famille' && ` • ${result.membres} personnes`}
-                {result.type === 'individu' && result.age && ` • ${result.age} ans`}
-              </p>
+  {result.bloc} • {result.appartement}
+  {result.type === 'appartement' && (
+    <span className={`ml-1 ${result.estOccupe ? 'text-green-600' : 'text-gray-500'}`}>
+      • {result.estOccupe ? 'Occupé' : 'Libre'}
+    </span>
+  )}
+  {result.type === 'famille' && ` • ${result.membres} personnes`}
+  {result.type === 'individu' && result.age && ` • ${result.age} ans`}
+</p>
             </div>
             {result.telephone && (
               <div className="text-xs text-gray-500 flex items-center gap-1">

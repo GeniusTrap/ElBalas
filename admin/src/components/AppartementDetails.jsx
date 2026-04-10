@@ -183,8 +183,9 @@ const HistoriquePaiement = ({
   dateArrivee, 
   dernierPaiement, 
   typeOccupation, 
-  paiements = [],  // ← Nouveau
-  onMarquerPaye     // ← Nouveau callback
+  paiements = [],  
+  statutPaiement,
+  onMarquerPaye     
 }) => {
   const [periodesImpayees, setPeriodesImpayees] = useState([]);
   
@@ -232,12 +233,15 @@ const HistoriquePaiement = ({
   }, [dateArrivee, paiements, typeOccupation]);
   
   if (typeOccupation === 'achat') {
-    return (
-      <div className="mt-2 p-3 bg-gray-100 rounded-lg">
-        <p className="text-sm text-green-600 font-medium">✓ Achat - Pas de paiement périodique</p>
-      </div>
-    );
-  }
+  const estPaye = statutPaiement === 'paye';
+  return (
+    <div className="mt-2 p-3 bg-gray-100 rounded-lg">
+      <p className={`text-sm font-medium ${estPaye ? 'text-green-600' : 'text-red-600'}`}>
+        {estPaye ? '✓ Achat - Payé' : '✗ Achat - Non payé'}
+      </p>
+    </div>
+  );
+}
   
   if (periodesImpayees.length === 0) {
     return null;
@@ -963,6 +967,7 @@ addNotification('paiement', paiementData);
   dernierPaiement={groupe.dernierPaiement}
   typeOccupation={groupe.typeOccupation}
   paiements={groupe.paiements || []}
+  statutPaiement={groupe.statutPaiement}
   onMarquerPaye={handleMarquerPeriodePaye}
 />
     <CompteurPaiement 
@@ -1037,6 +1042,7 @@ addNotification('paiement', paiementData);
   dernierPaiement={groupe.dernierPaiement}
   typeOccupation={groupe.typeOccupation}
   paiements={groupe.paiements || []}
+  statutPaiement={groupe.statutPaiement}
   onMarquerPaye={handleMarquerPeriodePaye}
 />
                       <CompteurPaiement 

@@ -3,7 +3,24 @@ import { assets } from '../assets/assets';
 import { backendUrl } from '../App';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-
+const countries = [
+  { code: '+216', name: 'Tunisie', flag: '🇹🇳', example: '20 123 456' },
+  { code: '+33', name: 'France', flag: '🇫🇷', example: '6 12 34 56 78' },
+  { code: '+213', name: 'Algérie', flag: '🇩🇿', example: '5 51 23 45 67' },
+  { code: '+212', name: 'Maroc', flag: '🇲🇦', example: '6 12 34 56 78' },
+  { code: '+216', name: 'Tunisie', flag: '🇹🇳', example: '20 123 456' },
+  { code: '+1', name: 'USA/Canada', flag: '🇺🇸', example: '123 456 7890' },
+  { code: '+44', name: 'Royaume-Uni', flag: '🇬🇧', example: '7123 456789' },
+  { code: '+49', name: 'Allemagne', flag: '🇩🇪', example: '151 23456789' },
+  { code: '+32', name: 'Belgique', flag: '🇧🇪', example: '471 12 34 56' },
+  { code: '+41', name: 'Suisse', flag: '🇨🇭', example: '76 123 45 67' },
+  { code: '+39', name: 'Italie', flag: '🇮🇹', example: '312 345 6789' },
+  { code: '+34', name: 'Espagne', flag: '🇪🇸', example: '612 34 56 78' },
+  { code: '+90', name: 'Turquie', flag: '🇹🇷', example: '532 123 4567' },
+  { code: '+20', name: 'Égypte', flag: '🇪🇬', example: '10 1234 5678' },
+  { code: '+966', name: 'Arabie Saoudite', flag: '🇸🇦', example: '5 1234 5678' },
+  { code: '+971', name: 'Émirats Arabes Unis', flag: '🇦🇪', example: '50 123 4567' },
+];
 
 // Fonctions de validation du mot de passe
 const validatePassword = (password) => {
@@ -40,16 +57,24 @@ const validateEmailFormat = (email) => {
   return emailRegex.test(email);
 };
 
-const validatePhoneNumber = (phone) => {
+const validatePhoneNumber = (phone, countryCode) => {
   // Supprimer tous les espaces et caractères non numériques
   const cleanPhone = phone.replace(/\s/g, '');
   
-  // Vérifier si c'est exactement 8 chiffres
-  const phoneRegex = /^[0-9]{8}$/;
+  // Accepter les numéros avec ou sans l'indicatif
+  // Si le numéro commence déjà par l'indicatif, le retirer pour validation
+  let numberToValidate = cleanPhone;
+  if (numberToValidate.startsWith(countryCode.replace('+', ''))) {
+    numberToValidate = numberToValidate.substring(countryCode.replace('+', '').length);
+  }
+  
+  // Vérifier selon le pays (minimum 6 chiffres, maximum 15)
+  const isValid = numberToValidate.length >= 6 && numberToValidate.length <= 15 && /^[0-9]+$/.test(numberToValidate);
   
   return {
-    isValid: phoneRegex.test(cleanPhone),
-    cleanValue: cleanPhone
+    isValid: isValid,
+    cleanValue: cleanPhone,
+    fullNumber: cleanPhone.startsWith(countryCode.replace('+', '')) ? cleanPhone : countryCode.replace('+', '') + cleanPhone
   };
 };
 
@@ -71,7 +96,8 @@ const Login = ({ setIsAuthenticated, navigate }) => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -88,6 +114,8 @@ const Login = ({ setIsAuthenticated, navigate }) => {
   setLoading(true);
   setError('');
 
+  let phoneValidation = null; 
+
   if (!isLogin && formData.password !== formData.confirmPassword) {
     setError('Les mots de passe ne correspondent pas');
     setLoading(false);
@@ -101,12 +129,12 @@ const Login = ({ setIsAuthenticated, navigate }) => {
       return;
     }
 
-    const phoneValidation = validatePhoneNumber(formData.phone);
-  if (!phoneValidation.isValid) {
-    setError('Le numéro de téléphone doit contenir exactement 8 chiffres');
-    setLoading(false);
-    return;
-  }
+    phoneValidation = validatePhoneNumber(formData.phone, selectedCountry.code);
+if (!phoneValidation.isValid) {
+  setError(`Veuillez entrer un numéro de téléphone valide pour ${selectedCountry.name} (${selectedCountry.code} XXXXXXXXX)`);
+  setLoading(false);
+  return;
+}
     const passwordValidation = validatePassword(formData.password);
     if (!passwordValidation.isValid) {
       setError(`Mot de passe invalide : ${passwordValidation.errors.join(', ')}`);
@@ -126,10 +154,13 @@ const Login = ({ setIsAuthenticated, navigate }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: formData.email,
-        password: formData.password,
-        ...(!isLogin && { name: formData.name, phone: formData.phone })
-      }),
+  email: formData.email,
+  password: formData.password,
+  ...(!isLogin && { 
+    name: formData.name, 
+    phone: phoneValidation ? phoneValidation.fullNumber : ''  // Envoyer le numéro complet avec indicatif
+  })
+}),
     });
 
     const data = await response.json();
@@ -246,19 +277,61 @@ const Login = ({ setIsAuthenticated, navigate }) => {
     </div>
 
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">
-        Téléphone
-      </label>
-      <input
-        type="tel"
-        name="phone"
-        value={formData.phone}
-        onChange={handleChange}
-        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
-        placeholder="20 123 456"
-        required={!isLogin}
-      />
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Téléphone
+  </label>
+  <div className="flex gap-2">
+    {/* Sélecteur de pays */}
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+        className="flex items-center gap-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:ring-2 focus:ring-yellow-500"
+      >
+        <span className="text-lg">{selectedCountry.flag}</span>
+        <span className="font-medium">{selectedCountry.code}</span>
+        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      
+      {/* Dropdown des pays */}
+      {showCountryDropdown && (
+        <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-lg shadow-xl z-50 max-h-60 overflow-y-auto">
+          {countries.map((country, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => {
+                setSelectedCountry(country);
+                setShowCountryDropdown(false);
+                // Optionnel : mettre à jour le placeholder
+                const phoneInput = document.querySelector('input[name="phone"]');
+                if (phoneInput) phoneInput.placeholder = country.example;
+              }}
+              className="w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-left"
+            >
+              <span className="text-lg">{country.flag}</span>
+              <span className="text-sm font-medium">{country.code}</span>
+              <span className="text-sm text-gray-500">{country.name}</span>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
+    
+    {/* Champ numéro de téléphone */}
+    <input
+      type="tel"
+      name="phone"
+      value={formData.phone}
+      onChange={handleChange}
+      className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+      placeholder={selectedCountry.example}
+      required={!isLogin}
+    />
+  </div>
+</div>
   </>
 )}
               

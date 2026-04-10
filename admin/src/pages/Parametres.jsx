@@ -6,6 +6,7 @@ import {
 } from 'react-icons/fa';
 import { backendUrl } from '../App';
 import AddBlocModal from '../components/AddBlocModal';
+import ReactCountryFlag from "react-country-flag";
 
 const Parametres = () => {
   const [userData, setUserData] = useState({
@@ -76,9 +77,6 @@ const Parametres = () => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [originalName, setOriginalName] = useState('');
 
-  const [editedPhone, setEditedPhone] = useState('');
-  const [isEditingPhone, setIsEditingPhone] = useState(false);
-  const [originalPhone, setOriginalPhone] = useState('');
 
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -89,12 +87,82 @@ const Parametres = () => {
 
   const [phoneError, setPhoneError] = useState('');
   const [shakePhone, setShakePhone] = useState(false);
+  const phonePrefixes = [
+  { code: '+216', countryCode: 'TN', name: 'Tunisie' },
+  { code: '+33', countryCode: 'FR', name: 'France' },
+  { code: '+213', countryCode: 'DZ', name: 'Algérie' },
+  { code: '+212', countryCode: 'MA', name: 'Maroc' },
+  { code: '+1', countryCode: 'US', name: 'USA/Canada' },
+  { code: '+44', countryCode: 'GB', name: 'Royaume-Uni' },
+  { code: '+49', countryCode: 'DE', name: 'Allemagne' },
+  { code: '+32', countryCode: 'BE', name: 'Belgique' },
+  { code: '+41', countryCode: 'CH', name: 'Suisse' },
+  { code: '+39', countryCode: 'IT', name: 'Italie' },
+  { code: '+34', countryCode: 'ES', name: 'Espagne' },
+  { code: '+90', countryCode: 'TR', name: 'Turquie' },
+  { code: '+20', countryCode: 'EG', name: 'Égypte' },
+  { code: '+966', countryCode: 'SA', name: 'Arabie Saoudite' },
+  { code: '+971', countryCode: 'AE', name: 'Émirats Arabes Unis' },
+];
 
+const getCountryFromPhone = (phone) => {
+  if (!phone) return { code: '+216', countryCode: 'TN', name: 'Tunisie' };
+  const cleanPhone = phone.replace(/\s/g, '');
+  const prefixes = [...phonePrefixes].sort((a, b) => b.code.length - a.code.length);
+  for (const prefix of prefixes) {
+    const prefixWithoutPlus = prefix.code.replace('+', '');
+    if (cleanPhone.startsWith(prefixWithoutPlus)) {
+      return prefix;
+    }
+  }
+  return { code: '+216', countryCode: 'TN', name: 'Tunisie' };
+};
+
+const formatPhoneNumber = (phone) => {
+  if (!phone) return '';
+  const clean = phone.replace(/\D/g, '');
+  const country = getCountryFromPhone(phone);
+  const prefixWithoutPlus = country.code.replace('+', '');
+  let numberPart = clean;
+  if (numberPart.startsWith(prefixWithoutPlus)) {
+    numberPart = numberPart.substring(prefixWithoutPlus.length);
+  }
+  
+  // Formatage personnalisé selon le pays
+  switch (country.countryCode) {
+    case 'TN': // Tunisie : 2 chiffres + 3 chiffres + 3 chiffres (ex: 21 915 864)
+      if (numberPart.length >= 8) {
+        return `${numberPart.slice(0, 2)} ${numberPart.slice(2, 5)} ${numberPart.slice(5, 8)}`;
+      }
+      break;
+    case 'FR': // France : 2 chiffres + 2 chiffres + 2 chiffres + 2 chiffres + 2 chiffres
+      if (numberPart.length >= 10) {
+        return `${numberPart.slice(0, 2)} ${numberPart.slice(2, 4)} ${numberPart.slice(4, 6)} ${numberPart.slice(6, 8)} ${numberPart.slice(8, 10)}`;
+      }
+      break;
+    case 'DZ': // Algérie : 2 chiffres + 2 chiffres + 2 chiffres + 2 chiffres
+    case 'MA': // Maroc : 2 chiffres + 2 chiffres + 2 chiffres + 2 chiffres
+      if (numberPart.length >= 8) {
+        return `${numberPart.slice(0, 2)} ${numberPart.slice(2, 4)} ${numberPart.slice(4, 6)} ${numberPart.slice(6, 8)}`;
+      }
+      break;
+    case 'US': 
+      if (numberPart.length >= 10) {
+        return `${numberPart.slice(0, 3)} ${numberPart.slice(3, 6)} ${numberPart.slice(6, 10)}`;
+      }
+      break;
+    default: 
+      const groups = numberPart.match(/.{1,2}/g);
+      return groups ? groups.join(' ') : numberPart;
+  }
+  
+  const groups = numberPart.match(/.{1,2}/g);
+  return groups ? groups.join(' ') : numberPart;
+};
 
   const isTrialExpired = () => {
   const userData = JSON.parse(sessionStorage.getItem('userData') || '{}');
   
-  // 🔥 PRIORITÉ À L'ABONNEMENT ACTIF
   const subscription = userData.subscription || {};
   const maintenant = new Date();
   
@@ -592,16 +660,48 @@ const getPasswordStrengthMessage = (password) => {
   };
 
   const handleUpdateProfile = async (field, value) => {
-    if (field === 'phone') {
-    const phoneValidation = validatePhoneNumber(value);
-    if (!phoneValidation.isValid) {
-      setPhoneError('Le numéro de téléphone doit contenir exactement 8 chiffres');
+  if (field === 'phone') {
+    const country = getCountryFromPhone(userData.phone);
+    const prefixWithoutPlus = country.code.replace('+', '');
+    const cleanNumber = value.replace(/\D/g, '');
+    
+    if (cleanNumber.length < 6 || cleanNumber.length > 15) {
+      setPhoneError(`Le numéro doit contenir entre 6 et 15 chiffres (${country.code})`);
       setShakePhone(true);
       setTimeout(() => setShakePhone(false), 500);
       return;
     }
+    
+    const fullNumber = prefixWithoutPlus + cleanNumber;
     setPhoneError('');
+    
+    try {
+      const token = sessionStorage.getItem('token');
+      const response = await fetch(`${backendUrl}/api/auth/update-profile`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ [field]: fullNumber })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setUserData(prev => ({ ...prev, [field]: fullNumber }));
+        setProfileSuccess(`Téléphone mis à jour avec succès`);
+        setTimeout(() => setProfileSuccess(''), 3000);
+      } else {
+        setGlobalError(data.message || 'Erreur lors de la mise à jour');
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+      setGlobalError('Erreur lors de la mise à jour');
+    }
+    return;
   }
+  // Nom
   try {
     const token = sessionStorage.getItem('token');
     const response = await fetch(`${backendUrl}/api/auth/update-profile`, {
@@ -763,65 +863,34 @@ const getPasswordStrengthMessage = (password) => {
   <label className="block text-sm font-medium text-gray-700 mb-1">
     Téléphone
   </label>
-  <div className="relative">
-    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-      <FaPhone size={18} />
+  <div className="flex gap-2">
+    {/* Drapeau non cliquable */}
+    <div className="flex items-center gap-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50">
+      <ReactCountryFlag 
+        countryCode={getCountryFromPhone(userData.phone).countryCode} 
+        svg 
+        style={{ width: '1.2em', height: '1.2em' }} 
+      />
+      <span className="font-medium text-gray-500">{getCountryFromPhone(userData.phone).code}</span>
     </div>
-    <input
-      type="tel"
-      value={isEditingPhone ? editedPhone : (userData.phone || '')}
-      onChange={(e) => {
-        setEditedPhone(e.target.value);
-        setIsEditingPhone(true);
-        setPhoneError('');
-      }}
-      onFocus={() => {
-        setEditedPhone(userData.phone || '');
-        setOriginalPhone(userData.phone || '');
-        setIsEditingPhone(true);
-        setPhoneError('');
-      }}
-      className={`w-full pl-9 md:pl-10 pr-16 md:pr-20 py-2 text-sm md:text-base border rounded-lg focus:ring-2 focus:ring-blue-500 ${
-        phoneError ? 'border-red-500' : 'border-gray-300'
-      }`}
-      placeholder="12 345 678"
-      maxLength="8"
-    />
     
-    {isEditingPhone && (
-      <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-1 md:space-x-2">
-        <button
-          onClick={async () => {
-            if (editedPhone !== originalPhone) {
-              await handleUpdateProfile('phone', editedPhone);
-            }
-            setIsEditingPhone(false);
-          }}
-          className="text-green-600 hover:text-green-800 bg-white rounded-full p-1"
-          title="Valider"
-        >
-          <FaCheck size={18} />
-        </button>
-        <button
-          onClick={() => {
-            setEditedPhone(originalPhone);
-            setIsEditingPhone(false);
-            setPhoneError('');
-          }}
-          className="text-red-600 hover:text-red-800 bg-white rounded-full p-1"
-          title="Annuler"
-        >
-          <FaTimes size={18} />
-        </button>
-      </div>
-    )}
+    {/* Champ numéro modifiable */}
+    <div className="relative flex-1">
+      <input
+  type="tel"
+  value={userData.phone ? formatPhoneNumber(userData.phone) : ''}
+  className="w-full px-4 py-2 text-sm md:text-base border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
+  readOnly
+  disabled
+/>
+    </div>
   </div>
   {phoneError && (
     <p className={`text-red-500 text-xs md:text-sm mt-1 ${shakePhone ? 'animate-shake' : ''}`}>
       {phoneError}
     </p>
   )}
-  <p className="text-xs text-green-600 mt-1"> Modifiable </p>
+  <p className="text-xs text-gray-500 mt-1">Non modifiable</p>
 </div>
 
             <div>

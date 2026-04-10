@@ -2,24 +2,24 @@ import React, { useState } from 'react';
 import { assets } from '../assets/assets';
 import { backendUrl } from '../App';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import ReactCountryFlag from "react-country-flag";
 
 const countries = [
-  { code: '+216', name: 'Tunisie', flag: '🇹🇳', example: '20 123 456' },
-  { code: '+33', name: 'France', flag: '🇫🇷', example: '6 12 34 56 78' },
-  { code: '+213', name: 'Algérie', flag: '🇩🇿', example: '5 51 23 45 67' },
-  { code: '+212', name: 'Maroc', flag: '🇲🇦', example: '6 12 34 56 78' },
-  { code: '+216', name: 'Tunisie', flag: '🇹🇳', example: '20 123 456' },
-  { code: '+1', name: 'USA/Canada', flag: '🇺🇸', example: '123 456 7890' },
-  { code: '+44', name: 'Royaume-Uni', flag: '🇬🇧', example: '7123 456789' },
-  { code: '+49', name: 'Allemagne', flag: '🇩🇪', example: '151 23456789' },
-  { code: '+32', name: 'Belgique', flag: '🇧🇪', example: '471 12 34 56' },
-  { code: '+41', name: 'Suisse', flag: '🇨🇭', example: '76 123 45 67' },
-  { code: '+39', name: 'Italie', flag: '🇮🇹', example: '312 345 6789' },
-  { code: '+34', name: 'Espagne', flag: '🇪🇸', example: '612 34 56 78' },
-  { code: '+90', name: 'Turquie', flag: '🇹🇷', example: '532 123 4567' },
-  { code: '+20', name: 'Égypte', flag: '🇪🇬', example: '10 1234 5678' },
-  { code: '+966', name: 'Arabie Saoudite', flag: '🇸🇦', example: '5 1234 5678' },
-  { code: '+971', name: 'Émirats Arabes Unis', flag: '🇦🇪', example: '50 123 4567' },
+  { code: '+216', name: 'Tunisie', countryCode: 'TN', example: '20 123 456' },
+  { code: '+33', name: 'France', countryCode: 'FR', example: '6 12 34 56 78' },
+  { code: '+213', name: 'Algérie', countryCode: 'DZ', example: '5 51 23 45 67' },
+  { code: '+212', name: 'Maroc', countryCode: 'MA', example: '6 12 34 56 78' },
+  { code: '+1', name: 'USA/Canada', countryCode: 'US', example: '123 456 7890' },
+  { code: '+44', name: 'Royaume-Uni', countryCode: 'GB', example: '7123 456789' },
+  { code: '+49', name: 'Allemagne', countryCode: 'DE', example: '151 23456789' },
+  { code: '+32', name: 'Belgique', countryCode: 'BE', example: '471 12 34 56' },
+  { code: '+41', name: 'Suisse', countryCode: 'CH', example: '76 123 45 67' },
+  { code: '+39', name: 'Italie', countryCode: 'IT', example: '312 345 6789' },
+  { code: '+34', name: 'Espagne', countryCode: 'ES', example: '612 34 56 78' },
+  { code: '+90', name: 'Turquie', countryCode: 'TR', example: '532 123 4567' },
+  { code: '+20', name: 'Égypte', countryCode: 'EG', example: '10 1234 5678' },
+  { code: '+966', name: 'Arabie Saoudite', countryCode: 'SA', example: '5 1234 5678' },
+  { code: '+971', name: 'Émirats Arabes Unis', countryCode: 'AE', example: '50 123 4567' },
 ];
 
 // Fonctions de validation du mot de passe
@@ -288,7 +288,7 @@ if (!phoneValidation.isValid) {
         onClick={() => setShowCountryDropdown(!showCountryDropdown)}
         className="flex items-center gap-1 px-3 py-2.5 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:ring-2 focus:ring-yellow-500"
       >
-        <span className="text-lg">{selectedCountry.flag}</span>
+        <ReactCountryFlag countryCode={selectedCountry.countryCode} svg style={{ width: '1.2em', height: '1.2em' }} />
         <span className="font-medium">{selectedCountry.code}</span>
         <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -305,13 +305,12 @@ if (!phoneValidation.isValid) {
               onClick={() => {
                 setSelectedCountry(country);
                 setShowCountryDropdown(false);
-                // Optionnel : mettre à jour le placeholder
                 const phoneInput = document.querySelector('input[name="phone"]');
                 if (phoneInput) phoneInput.placeholder = country.example;
               }}
               className="w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-left"
             >
-              <span className="text-lg">{country.flag}</span>
+              <ReactCountryFlag countryCode={country.countryCode} svg style={{ width: '1.2em', height: '1.2em' }} />
               <span className="text-sm font-medium">{country.code}</span>
               <span className="text-sm text-gray-500">{country.name}</span>
             </button>
@@ -320,7 +319,6 @@ if (!phoneValidation.isValid) {
       )}
     </div>
     
-    {/* Champ numéro de téléphone */}
     <input
       type="tel"
       name="phone"

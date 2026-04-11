@@ -8,6 +8,9 @@ import locataireRoutes from './routes/locataireRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import paiementRoutes from './routes/paiementRoutes.js';
 import './cronJobs.js';
+import session from 'express-session';
+import passport from 'passport';
+import configurePassport from './config/passport.js';
 
 
 const app = express();
@@ -30,6 +33,15 @@ app.use(cors({
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
+
+configurePassport();
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'secret-key',
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/api/test', (req, res) => {
   res.json({ message: 'API is working' });

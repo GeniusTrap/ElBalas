@@ -17,11 +17,13 @@ const VerifyEmailCode = ({ navigate, setIsAuthenticated }) => {
   const hasStartedDeletionRef = useRef(false);
   const isVerifyingRef = useRef(false);
 
+
   // Chargement initial
   useEffect(() => {
     const storedEmail = sessionStorage.getItem('pendingVerificationEmail');
     const storedToken = sessionStorage.getItem('pendingVerificationToken');
     const storedUserData = sessionStorage.getItem('pendingVerificationUserData');
+
     
     if (storedEmail && storedToken && storedUserData) {
       setEmail(storedEmail);
@@ -322,6 +324,7 @@ const VerifyEmailCode = ({ navigate, setIsAuthenticated }) => {
         
         const token = sessionStorage.getItem('pendingVerificationToken');
         const userData = JSON.parse(sessionStorage.getItem('pendingVerificationUserData') || '{}');
+
         
         userData.emailVerified = true;
         

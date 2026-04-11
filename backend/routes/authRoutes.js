@@ -5,6 +5,9 @@ import User from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import Residence from '../models/residenceModel.js';
 import { forgotPassword, resetPassword, verifyResetCode, invalidateCode } from '../controllers/emailController.js';
+import passport from 'passport';
+import jwt from 'jsonwebtoken';
+
 
 const router = express.Router();
 
@@ -97,8 +100,27 @@ router.delete('/delete-account', protect, deleteAccount);
 router.delete('/delete-unverified-account', deleteUnverifiedAccount);
 router.get('/force-refresh', protect, forceRefresh);
 
-router.get('/google', (req, res) => {
-  res.json({ message: 'Google OAuth à implémenter' });
-});
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+router.get('/google/callback',
+  passport.authenticate('google', { 
+    failureRedirect: `${process.env.FRONTEND_URL}/login`,
+    session: true 
+  }),
+  (req, res) => {
+    const token = jwt.sign(
+      { id: req.user._id, email: req.user.email, role: req.user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+    
+    // ✅ Ajouter un paramètre pour indiquer que c'est un nouvel utilisateur Google
+    const isNewUser = req.user.termsAccepted === false;
+    
+    res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}&user=${encodeURIComponent(JSON.stringify(req.user))}&isNewUser=${isNewUser}`);
+  }
+);
 
 export default router;

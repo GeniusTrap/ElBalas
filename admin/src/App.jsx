@@ -537,6 +537,7 @@ if (error.name === 'AbortError' || error.message.includes('Failed to fetch')) {
         <Route path="/verify-code" element={<VerifyCode navigate={navigate} />} />
         <Route path="/verify-email" element={<VerifyEmailCode navigate={navigate} setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/reset-password" element={<ResetPassword navigate={navigate} />} />
+        <Route path="/auth/callback" element={<Login setIsAuthenticated={setIsAuthenticated} navigate={navigate} />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
       ) : (

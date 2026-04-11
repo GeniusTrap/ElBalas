@@ -74,6 +74,7 @@ const ConfigModal3D = ({ setShowConfigModal, setIsFirstTime, setResidenceData })
     blocs: []
   });
 
+
   const isBlocNameTaken = (nom) => {
   return formData.blocs.some(bloc => bloc.nom === nom);
 };

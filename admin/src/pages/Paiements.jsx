@@ -120,6 +120,7 @@ const Paiements = () => {
   const termsAccepted = userData.termsAccepted === true;
 
 
+
   // Récupérer trialEndDate spécifique à l'utilisateur
   let isTrialExpired = false;
 if (userData.termsAcceptedDate) {

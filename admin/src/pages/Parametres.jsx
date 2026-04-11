@@ -520,9 +520,6 @@ const isSubscriptionExpired = () => {
     errors.push('un chiffre');
   }
   
-  if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
-    errors.push('un caractère spécial');
-  }
   
   return {
     isValid: errors.length === 0,
@@ -859,40 +856,45 @@ const getPasswordStrengthMessage = (password) => {
               <p className="text-xs text-gray-500 mt-1">Non modifiable</p>
             </div>
 
-            <div>
-  <label className="block text-sm font-medium text-gray-700 mb-1">
-    Téléphone
-  </label>
-  <div className="flex gap-2">
-    {/* Drapeau non cliquable */}
-    <div className="flex items-center gap-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50">
-      <ReactCountryFlag 
-        countryCode={getCountryFromPhone(userData.phone).countryCode} 
-        svg 
-        style={{ width: '1.2em', height: '1.2em' }} 
-      />
-      <span className="font-medium text-gray-500">{getCountryFromPhone(userData.phone).code}</span>
+            {userData.phone ? (
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Téléphone
+    </label>
+    <div className="flex gap-2">
+      {/* Drapeau non cliquable */}
+      <div className="flex items-center gap-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50">
+        <ReactCountryFlag 
+          countryCode={getCountryFromPhone(userData.phone).countryCode} 
+          svg 
+          style={{ width: '1.2em', height: '1.2em' }} 
+        />
+        <span className="font-medium text-gray-500">{getCountryFromPhone(userData.phone).code}</span>
+      </div>
+      
+      {/* Champ numéro non modifiable */}
+      <div className="relative flex-1">
+        <input
+          type="tel"
+          value={formatPhoneNumber(userData.phone)}
+          className="w-full px-4 py-2 text-sm md:text-base border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
+          readOnly
+          disabled
+        />
+      </div>
     </div>
-    
-    {/* Champ numéro modifiable */}
-    <div className="relative flex-1">
-      <input
-  type="tel"
-  value={userData.phone ? formatPhoneNumber(userData.phone) : ''}
-  className="w-full px-4 py-2 text-sm md:text-base border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
-  readOnly
-  disabled
-/>
+    <p className="text-xs text-gray-500 mt-1">Non modifiable</p>
+  </div>
+) : (
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Téléphone
+    </label>
+    <div className="text-gray-500 italic bg-gray-50 p-3 rounded-lg border border-gray-200">
+      Aucun numéro renseigné (compte Google)
     </div>
   </div>
-  {phoneError && (
-    <p className={`text-red-500 text-xs md:text-sm mt-1 ${shakePhone ? 'animate-shake' : ''}`}>
-      {phoneError}
-    </p>
-  )}
-  <p className="text-xs text-gray-500 mt-1">Non modifiable</p>
-</div>
-
+)}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Rôle

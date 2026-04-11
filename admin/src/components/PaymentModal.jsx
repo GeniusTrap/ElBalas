@@ -7,6 +7,7 @@ const PaymentModal = ({ isOpen, onClose, onAccept }) => {
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  
   if (!isOpen) return null;
 
 const handleAccept = async () => {

@@ -1,4 +1,3 @@
-import cron from 'node-cron';
 import Locataire from './models/locataireModel.js';
 
 const resetPaiementsMensuels = async () => {
@@ -49,10 +48,6 @@ const resetPaiementsMensuels = async () => {
   }
 };
 
-cron.schedule('0 0 * * *', async () => {
-  await resetPaiementsMensuels();
-});
-
 export const verifierRetardsPaiement = async () => {
   try {
     
@@ -73,20 +68,16 @@ export const verifierRetardsPaiement = async () => {
       const dateArrivee = new Date(locataire.dateArrivee);
       dateArrivee.setHours(0, 0, 0, 0);
       
-      // Calculer la période actuelle
       const joursDepuisArrivee = Math.floor((maintenant - dateArrivee) / (1000 * 60 * 60 * 24));
       const periodeActuelle = Math.floor(joursDepuisArrivee / 30) + 1;
       
-      // Récupérer les paiements existants
       const paiements = locataire.paiements || [];
       const periodesPayees = paiements.map(p => p.periode);
       
       
-      // ✅ Vérifier TOUTES les périodes (pas seulement la période actuelle)
       for (let periode = 1; periode <= periodeActuelle; periode++) {
         const periodePayee = periodesPayees.includes(periode);
         
-        // Calculer la date de fin de cette période
         const debutPeriode = new Date(dateArrivee);
         debutPeriode.setDate(debutPeriode.getDate() + ((periode - 1) * 30));
         debutPeriode.setHours(0, 0, 0, 0);
@@ -104,13 +95,11 @@ export const verifierRetardsPaiement = async () => {
           
           
           if (!dejaNotifie) {
-            // Récupérer l'utilisateur associé
             const user = await User.findOne({ residenceId: locataire.residenceId });
             if (!user) {
               continue;
             }
             
-            // Construire le message
             let message = '';
             if (locataire.type === 'famille') {
               message = `⏰ Paiement en retard - La famille ${locataire.nomFamille} de l'appartement ${locataire.appartementNom} doit payer`;
@@ -118,7 +107,6 @@ export const verifierRetardsPaiement = async () => {
               message = `⏰ Paiement en retard - Les résidents de l'appartement ${locataire.appartementNom} doivent payer`;
             }
             
-            // Créer la notification
             const notification = new Notification({
               userId: user._id,
               type: 'retard_paiement',
@@ -156,9 +144,4 @@ export const verifierRetardsPaiement = async () => {
   }
 };
 
-// Planifier la vérification toutes les 30 secondes
-cron.schedule('*/30 * * * * *', async () => {
-  await verifierRetardsPaiement();
-});
-
-export default cron;
+export { resetPaiementsMensuels };

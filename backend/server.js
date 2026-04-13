@@ -63,6 +63,17 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get('/api/cron/verifier-retards', async (req, res) => {
+  try {
+    const { verifierRetardsPaiement } = await import('./cronJobs.js');
+    await verifierRetardsPaiement();
+    res.json({ success: true, message: 'Vérification effectuée' });
+  } catch (error) {
+    console.error('❌ Erreur cron:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 app.listen(port, () => {
     console.log(`✅ Server started on PORT: ${port}`);
 });

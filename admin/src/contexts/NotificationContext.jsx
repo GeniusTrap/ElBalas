@@ -64,34 +64,39 @@ export const NotificationProvider = ({ children }) => {
 
   // Écouter les événements de mise à jour
   useEffect(() => {
-    const handleNotificationsUpdate = () => {
-      const fetchNotifications = async () => {
-        const currentUser = getCurrentUser();
-        if (!currentUser.id) return;
-        
-        try {
-          const token = sessionStorage.getItem('token');
-          const response = await fetch(`${backendUrl}/api/notifications`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
-          const data = await response.json();
-          if (data.success) {
-            setNotifications(data.notifications);
-          }
-        } catch (error) {
-          console.error('❌ Erreur rechargement:', error);
-        }
-      };
+  const handleNotificationsUpdate = () => {
+    const fetchNotifications = async () => {
+      const currentUser = getCurrentUser();
+      if (!currentUser.id) {
+        setLoading(false);
+        return;
+      }
       
-      fetchNotifications();
+      try {
+        const token = sessionStorage.getItem('token');
+        const response = await fetch(`${backendUrl}/api/notifications`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await response.json();
+        if (data.success) {
+          setNotifications(data.notifications);
+        }
+      } catch (error) {
+        console.error('❌ Erreur rechargement:', error);
+      } finally {
+        setLoading(false);
+      }
     };
-
-    window.addEventListener('notifications-updated', handleNotificationsUpdate);
     
-    return () => {
-      window.removeEventListener('notifications-updated', handleNotificationsUpdate);
-    };
-  }, []);
+    fetchNotifications();
+  };
+
+  window.addEventListener('notifications-updated', handleNotificationsUpdate);
+  
+  return () => {
+    window.removeEventListener('notifications-updated', handleNotificationsUpdate);
+  };
+}, []);
 
 
   // Ajouter une notification

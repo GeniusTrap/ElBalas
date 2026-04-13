@@ -42,7 +42,7 @@ const isSubscriptionExpired = () => {
 };
 
   
-  const { notifications, markAsRead, markAllAsRead, deleteNotification, loading } = useNotifications();
+  const { notifications, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
   const residenceData = JSON.parse(sessionStorage.getItem('residenceData') || '{}');
   const residenceName = residenceData.residenceName || 'EL BALAS';
 
@@ -92,6 +92,7 @@ const isSubscriptionExpired = () => {
         </h1>
         
         <div className="flex items-center space-x-2 md:space-x-4">
+          {/* Icône de notification avec badge */}
           <div className="relative">
             <button
   onClick={() => {
@@ -101,6 +102,7 @@ const isSubscriptionExpired = () => {
   }
   
     if (isTrialExpired) {
+      // Déclencher l'ouverture du modal d'expiration
       window.dispatchEvent(new CustomEvent('showExpiredModal'));
       return;
     }
@@ -117,6 +119,7 @@ const isSubscriptionExpired = () => {
               )}
             </button>
 
+            {/* Menu déroulant des notifications */}
             {showNotifications && (
               <>
                 <div 
@@ -140,13 +143,9 @@ const isSubscriptionExpired = () => {
                   </div>
                   
                   <div className="max-h-96 overflow-y-auto">
-  {loading ? (
-    <div className="p-8 text-center">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-500 mx-auto" />
-      <p className="text-gray-500 mt-2">Chargement...</p>
-    </div>
-  ) : userNotifications.length > 0 ? (
+  {userNotifications.length > 0 ? (
     userNotifications.map((notif) => {
+      // ✅ Log pour les notifications de retard
       if (notif.type === 'retard_paiement') {
       }
       
@@ -195,6 +194,7 @@ const isSubscriptionExpired = () => {
         </div>
       </>
     ) : (
+      // Affichage normal pour les ajouts
       <>
         <p>Bloc {notif.details.bloc} • App {notif.details.appartement}</p>
         <p>📍 Arrivée : {new Date(notif.details.dateArrivee).toLocaleDateString('fr-FR')}</p>
@@ -205,6 +205,7 @@ const isSubscriptionExpired = () => {
       </>
     )}
     
+    {/* Statut de paiement */}
     <div className={`flex items-center justify-between mt-1 pt-1 border-t border-gray-200 ${
       notif.details.estPaye ? 'text-green-600' : 'text-yellow-600'
     }`}>

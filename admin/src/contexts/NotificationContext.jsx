@@ -9,7 +9,6 @@ export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [lastCheck, setLastCheck] = useState(Date.now());
-  const [loading, setLoading] = useState(true);
   
   // Récupérer l'utilisateur actuel
   const getCurrentUser = () => {
@@ -22,7 +21,6 @@ export const NotificationProvider = ({ children }) => {
       const currentUser = getCurrentUser();
       
       if (!currentUser.id) {
-        setLoading(false);
         return;
       }
       
@@ -64,39 +62,34 @@ export const NotificationProvider = ({ children }) => {
 
   // Écouter les événements de mise à jour
   useEffect(() => {
-  const handleNotificationsUpdate = () => {
-    const fetchNotifications = async () => {
-      const currentUser = getCurrentUser();
-      if (!currentUser.id) {
-        setLoading(false);
-        return;
-      }
-      
-      try {
-        const token = sessionStorage.getItem('token');
-        const response = await fetch(`${backendUrl}/api/notifications`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await response.json();
-        if (data.success) {
-          setNotifications(data.notifications);
+    const handleNotificationsUpdate = () => {
+      const fetchNotifications = async () => {
+        const currentUser = getCurrentUser();
+        if (!currentUser.id) return;
+        
+        try {
+          const token = sessionStorage.getItem('token');
+          const response = await fetch(`${backendUrl}/api/notifications`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const data = await response.json();
+          if (data.success) {
+            setNotifications(data.notifications);
+          }
+        } catch (error) {
+          console.error('❌ Erreur rechargement:', error);
         }
-      } catch (error) {
-        console.error('❌ Erreur rechargement:', error);
-      } finally {
-        setLoading(false);
-      }
+      };
+      
+      fetchNotifications();
     };
-    
-    fetchNotifications();
-  };
 
-  window.addEventListener('notifications-updated', handleNotificationsUpdate);
-  
-  return () => {
-    window.removeEventListener('notifications-updated', handleNotificationsUpdate);
-  };
-}, []);
+    window.addEventListener('notifications-updated', handleNotificationsUpdate);
+    
+    return () => {
+      window.removeEventListener('notifications-updated', handleNotificationsUpdate);
+    };
+  }, []);
 
 
   // Ajouter une notification
@@ -301,7 +294,6 @@ export const NotificationProvider = ({ children }) => {
     <NotificationContext.Provider value={{
       notifications,
       unreadCount,
-      loading,
       addNotification,
       markAsRead,
       markAllAsRead,

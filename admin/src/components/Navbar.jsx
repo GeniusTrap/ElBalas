@@ -42,7 +42,7 @@ const isSubscriptionExpired = () => {
 };
 
   
-  const { notifications, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
+  const { notifications, markAsRead, markAllAsRead, deleteNotification, loading } = useNotifications();
   const residenceData = JSON.parse(sessionStorage.getItem('residenceData') || '{}');
   const residenceName = residenceData.residenceName || 'EL BALAS';
 
@@ -140,7 +140,12 @@ const isSubscriptionExpired = () => {
                   </div>
                   
                   <div className="max-h-96 overflow-y-auto">
-  {userNotifications.length > 0 ? (
+  {loading ? (
+    <div className="p-8 text-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-500 mx-auto" />
+      <p className="text-gray-500 mt-2">Chargement...</p>
+    </div>
+  ) : userNotifications.length > 0 ? (
     userNotifications.map((notif) => {
       if (notif.type === 'retard_paiement') {
       }

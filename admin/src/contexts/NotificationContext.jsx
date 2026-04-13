@@ -9,6 +9,7 @@ export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [lastCheck, setLastCheck] = useState(Date.now());
+  const [loading, setLoading] = useState(true);
   
   // Récupérer l'utilisateur actuel
   const getCurrentUser = () => {
@@ -21,6 +22,7 @@ export const NotificationProvider = ({ children }) => {
       const currentUser = getCurrentUser();
       
       if (!currentUser.id) {
+        setLoading(false);
         return;
       }
       
@@ -294,6 +296,7 @@ export const NotificationProvider = ({ children }) => {
     <NotificationContext.Provider value={{
       notifications,
       unreadCount,
+      loading,
       addNotification,
       markAsRead,
       markAllAsRead,

@@ -122,6 +122,15 @@ const handleAccept = async () => {
   </p>
 </div>
 
+<div className="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+  <p className="text-xs text-gray-600 leading-relaxed">
+    <span className="font-semibold text-yellow-700">⚠️ Important :</span> Si vous avez créé votre compte avec Google et que vous perdez l'accès à ce compte Google, 
+    <span className="font-medium text-red-600"> la récupération de votre compte EL BALAS n'est pas garantie</span>. 
+    En revanche, si vous avez créé votre compte avec un email et un mot de passe, vous pourrez le récupérer via la procédure standard 
+    (<span className="font-medium">"Mot de passe oublié"</span>). Nous vous conseillons de conserver précieusement vos identifiants de connexion.
+  </p>
+</div>
+
           <div className="space-y-3 border-t border-gray-200 mt-6 pt-4">
             <label className="flex items-start space-x-3 cursor-pointer">
               <input

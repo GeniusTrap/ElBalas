@@ -112,6 +112,16 @@ const handleAccept = async () => {
             </p>
           </div>
 
+          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+  <p className="text-sm text-gray-700 leading-relaxed">
+    <span className="font-semibold text-blue-700">💰 Paiement sécurisé via DHMAD.tn</span><br />
+    Pour souscrire à un abonnement, vous devrez d'abord créer un compte sur la plateforme <span className="font-medium">DHMAD.tn</span>, 
+    où vous pourrez déposer vos fonds en toute sécurité. Une fois votre compte approvisionné, vous pourrez utiliser cet espace 
+    pour régler vos abonnements mensuels, semestriels ou annuels. DHMAD.tn garantit des transactions 100% sécurisées et 
+    conformes aux normes tunisiennes (e-DINAR, cartes bancaires).
+  </p>
+</div>
+
           <div className="space-y-3 border-t border-gray-200 mt-6 pt-4">
             <label className="flex items-start space-x-3 cursor-pointer">
               <input

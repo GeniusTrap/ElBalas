@@ -921,40 +921,42 @@ addNotification('paiement', paiementData);
                 <div key={groupe._id} className="bg-gray-50 rounded-lg p-4">
                   {groupe.type === 'famille' ? (
   <div>
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        <FaUsers className="text-blue-600" />
-        <h2 className="font-semibold text-gray-800">
-          Famille {groupe.nomFamille}
-        </h2>
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="text-sm bg-gray-200 px-3 py-1 rounded-full flex items-center gap-1">
-          <FaCalendar size={12} className="text-gray-500" />
-          {new Date(groupe.dateArrivee).toLocaleDateString('fr-FR')}
-        </span>
-        <span className="text-sm bg-gray-200 px-3 py-1 rounded-full">
-          {groupe.nombreMembres} personne{groupe.nombreMembres > 1 ? 's' : ''}
-        </span>
-        <button
-  onClick={() => {
-    setSelectedGroupeForDelete(groupe);
-    setShowDeleteConfirmModal(true);
-  }}
-  className="p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-full transition-colors"
-  title="Supprimer"
->
-  <FaTrash size={14} />
-</button>
-<button
-  onClick={() => handleOpenTransfertModal(groupe)}
-  className="p-2 bg-blue-100 hover:bg-blue-200 text-blue-600 rounded-full transition-colors"
-  title="Transférer"
->
-  <FaExchangeAlt size={14} />
-</button>
-      </div>
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+  <div className="flex items-center gap-2">
+    <FaUsers className="text-blue-600" />
+    <h2 className="font-semibold text-gray-800">
+      Famille {groupe.nomFamille}
+    </h2>
+  </div>
+  <div className="flex flex-wrap items-center gap-2">
+    <span className="text-xs bg-gray-200 px-2 py-1 rounded-full flex items-center gap-1">
+      <FaCalendar size={10} className="text-gray-500" />
+      {new Date(groupe.dateArrivee).toLocaleDateString('fr-FR')}
+    </span>
+    <span className="text-xs bg-gray-200 px-2 py-1 rounded-full">
+      {groupe.nombreMembres} pers.
+    </span>
+    <div className="flex items-center gap-1">
+      <button
+        onClick={() => {
+          setSelectedGroupeForDelete(groupe);
+          setShowDeleteConfirmModal(true);
+        }}
+        className="p-1.5 bg-red-100 hover:bg-red-200 text-red-600 rounded-full transition-colors"
+        title="Supprimer"
+      >
+        <FaTrash size={12} />
+      </button>
+      <button
+        onClick={() => handleOpenTransfertModal(groupe)}
+        className="p-1.5 bg-blue-100 hover:bg-blue-200 text-blue-600 rounded-full transition-colors"
+        title="Transférer"
+      >
+        <FaExchangeAlt size={12} />
+      </button>
     </div>
+  </div>
+</div>
     
     {groupe.telephoneFamille && (
       <div className="mt-3 flex items-center gap-2 text-gray-600">
@@ -979,31 +981,35 @@ addNotification('paiement', paiementData);
   </div>
                   ) : (
                     <div>
-                      <div className="flex items-center gap-2 mb-3 pb-2 border-b border-gray-200">
-  <FaUsers className="text-blue-600" />
-  <h2 className="font-semibold text-gray-800">Résidents</h2>
-  <div className="ml-auto flex items-center gap-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3 pb-2 border-b border-gray-200">
+  <div className="flex items-center gap-2">
+    <FaUsers className="text-blue-600" />
+    <h2 className="font-semibold text-gray-800">Résidents</h2>
+  </div>
+  <div className="flex flex-wrap items-center gap-2">
     <span className="text-xs bg-gray-200 px-2 py-1 rounded-full flex items-center gap-1">
       <FaCalendar size={10} className="text-gray-500" />
       {new Date(groupe.dateArrivee).toLocaleDateString('fr-FR')}
     </span>
     <span className="text-xs bg-gray-200 px-2 py-1 rounded-full">
-      {groupe.membres.length} personne{groupe.membres.length > 1 ? 's' : ''}
+      {groupe.membres.length} pers.
     </span>
-    <button
-  onClick={() => handleDeleteDirect(groupe)}
-  className="p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-full transition-colors"
-  title="Supprimer"
->
-  <FaTrash size={12} />
-</button>
-<button
-  onClick={() => handleOpenTransfertModal(groupe)}
-  className="p-2 bg-blue-100 hover:bg-blue-200 text-blue-600 rounded-full transition-colors"
-  title="Transférer"
->
-  <FaExchangeAlt size={12} />
-</button>
+    <div className="flex items-center gap-1">
+      <button
+        onClick={() => handleDeleteDirect(groupe)}
+        className="p-1.5 bg-red-100 hover:bg-red-200 text-red-600 rounded-full transition-colors"
+        title="Supprimer"
+      >
+        <FaTrash size={12} />
+      </button>
+      <button
+        onClick={() => handleOpenTransfertModal(groupe)}
+        className="p-1.5 bg-blue-100 hover:bg-blue-200 text-blue-600 rounded-full transition-colors"
+        title="Transférer"
+      >
+        <FaExchangeAlt size={12} />
+      </button>
+    </div>
   </div>
 </div>
 

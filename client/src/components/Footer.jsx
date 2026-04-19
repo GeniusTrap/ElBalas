@@ -24,7 +24,7 @@ const Footer = () => {
             <h4 className="text-lg font-semibold text-yellow-500 mb-4">Contact</h4>
             <div className="space-y-3">
               <a 
-  href="https://mail.google.com/mail/?view=cm&fs=1&to=elbalas.support@gmail.com&su=Demande%20d%27information%20EL%20BALAS&body=Bonjour%2C%0A%0AJe%20souhaite%20obtenir%20plus%20d%27informations%20sur%20EL%20BALAS.%0A%0AMerci%0A%0ACordialement%2C"
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=elbalas.support@gmail.com&su=Demande%20d%27information%20EL%20BALAS"
   target="_blank"
   rel="noopener noreferrer"
   className="flex items-center gap-3 text-gray-400 hover:text-yellow-500 transition-colors duration-300 md:justify-end"
